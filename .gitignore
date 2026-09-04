@@ -1,0 +1,25 @@
+# Node / Frontend dependencies & build artifacts
+**/node_modules/
+**/dist/
+**/.output/
+**/.nitro/
+**/.tanstack/
+**/.vercel/
+**/*.log
+
+# Java / Maven / Backend dependencies & build artifacts
+**/target/
+**/*.class
+**/*.jar
+**/*.war
+
+# Environment files & secret keys
+**/.env
+**/.env.local
+
+# IDE & OS files
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

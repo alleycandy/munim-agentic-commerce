@@ -1,0 +1,53 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: munim-backend
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/munim}
+    username: ${SPRING_DATASOURCE_USERNAME:munim}
+    password: ${SPRING_DATASOURCE_PASSWORD:munim}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        format_sql: false
+    show-sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+# Munim / Rao & Sons business configuration.
+munim:
+  shop-timezone: Asia/Kolkata
+  ai:
+    api-key: ${XAI_API_KEY:}
+    base-url: https://api.x.ai/v1/chat/completions
+    model: grok-4.5
+    temperature: 0.4
+    max-tokens: 900
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    com.raosons.munim: INFO

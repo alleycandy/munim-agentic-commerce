@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Munim OG</title>
+  <style>
+    @font-face {
+      font-family: "Fraunces";
+      font-style: normal;
+      font-weight: 600;
+      src: url("og-fonts/fraunces-600.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Fraunces";
+      font-style: italic;
+      font-weight: 400;
+      src: url("og-fonts/fraunces-italic-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 400;
+      src: url("og-fonts/plex-mono-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 500;
+      src: url("og-fonts/plex-mono-500.woff2") format("woff2");
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
+
+    :root {
+      --paper: #EFE8DC;
+      --ink: #1A1612;
+      --teal: #1F4E5A;
+      --stamp: #8F2D2D;
+      --cream: #F7F1E4;
+    }
+
+    .card {
+      position: relative;
+      width: 1200px;
+      height: 630px;
+      background: var(--paper);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Quiet account-book ruling */
+    .ruling {
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 27px,
+        rgba(31, 78, 90, 0.055) 27px,
+        rgba(31, 78, 90, 0.055) 28px
+      );
+      mask-image: linear-gradient(to bottom, transparent 0, black 72px, black 560px, transparent 630px);
+    }
+
+    .grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 1;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 90% 80% at 50% 48%,
+        transparent 40%,
+        rgba(26, 22, 18, 0.055) 100%
+      );
+      pointer-events: none;
+    }
+
+    .folio {
+      position: absolute;
+      top: 36px;
+      left: 72px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--teal);
+      opacity: 0.72;
+    }
+
+    .lockup {
+      position: absolute;
+      left: 72px;
+      top: 214px;
+      width: 620px;
+    }
+
+    .wordmark {
+      font-family: "Fraunces", "Times New Roman", serif;
+      font-weight: 600;
+      font-size: 118px;
+      line-height: 0.9;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+      font-optical-sizing: none;
+    }
+
+    .rule {
+      display: block;
+      width: 76px;
+      height: 3px;
+      background: var(--teal);
+      margin: 22px 0 20px 2px;
+    }
+
+    .tagline {
+      font-family: "Fraunces", "Times New Roman", serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 23px;
+      line-height: 1.35;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      opacity: 0.78;
+      max-width: 540px;
+    }
+
+    .receipt-wrap {
+      position: absolute;
+      right: 72px;
+      top: 64px;
+      width: 318px;
+      transform: rotate(6.2deg);
+      filter: drop-shadow(0 18px 28px rgba(26, 22, 18, 0.14))
+              drop-shadow(0 2px 4px rgba(26, 22, 18, 0.08));
+    }
+
+    .receipt {
+      position: relative;
+      background: var(--cream);
+      padding: 34px 28px 78px;
+      color: var(--ink);
+      /* torn thermal top */
+      clip-path: polygon(
+        0% 12px,
+        4% 0, 8% 12px, 12% 0, 16% 12px, 20% 0, 24% 12px, 28% 0,
+        32% 12px, 36% 0, 40% 12px, 44% 0, 48% 12px, 52% 0,
+        56% 12px, 60% 0, 64% 12px, 68% 0, 72% 12px, 76% 0,
+        80% 12px, 84% 0, 88% 12px, 92% 0, 96% 12px, 100% 0,
+        100% 100%, 0% 100%
+      );
+    }
+
+    .receipt::after {
+      /* faint thermal edge burn */
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(31, 78, 90, 0.04) 12px,
+        transparent 48px
+      );
+    }
+
+    .shop {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 12.5px;
+      letter-spacing: 0.22em;
+      text-align: center;
+      text-transform: uppercase;
+      padding-top: 4px;
+    }
+
+    .shop-sub {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+
+    .dots {
+      border: none;
+      border-top: 1.5px dashed rgba(26, 22, 18, 0.35);
+      margin: 14px 0;
+    }
+
+    .meta {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11.5px;
+      display: flex;
+      justify-content: space-between;
+      opacity: 0.72;
+      margin-bottom: 12px;
+    }
+
+    .lines {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 13px;
+      line-height: 1.85;
+    }
+
+    .line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .item { flex: 1; }
+    .qty {
+      opacity: 0.7;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .total-row {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2px;
+    }
+
+    .thanks {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      text-align: center;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 52px;
+      opacity: 0.55;
+    }
+
+    .stamp {
+      position: absolute;
+      right: 18px;
+      bottom: 28px;
+      width: 108px;
+      height: 108px;
+      transform: rotate(-18deg);
+      opacity: 0.9;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    .stamp text {
+      font-family: "Fraunces", "Times New Roman", serif;
+      font-weight: 600;
+      font-size: 28px;
+      letter-spacing: 0.14em;
+      fill: #8F2D2D;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="ruling"></div>
+    <svg class="grain" width="1200" height="630" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <filter id="n" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="7" stitchTiles="stitch"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0.10  0 0 0 0 0.085  0 0 0 0 0.06  0 0 0 0.16 0"/>
+      </filter>
+      <rect width="1200" height="630" filter="url(#n)"/>
+    </svg>
+    <div class="vignette"></div>
+
+    <div class="folio">Ledger · 1847</div>
+
+    <div class="lockup">
+      <div class="wordmark">MUNIM</div>
+      <span class="rule"></span>
+      <p class="tagline">The person at the counter. Now for agents.</p>
+    </div>
+
+    <div class="receipt-wrap">
+      <div class="receipt">
+        <div class="shop">Mangal Kirana</div>
+        <div class="shop-sub">F.C. Road · Pune</div>
+        <hr class="dots" />
+        <div class="meta">
+          <span>25 Aug 26</span>
+          <span>6:42 P</span>
+        </div>
+        <div class="lines">
+          <div class="line"><span class="item">Ambemohar rice</span><span class="qty">1 kg</span></div>
+          <div class="line"><span class="item">Thick poha</span><span class="qty">500 g</span></div>
+          <div class="line"><span class="item">Coconut oil</span><span class="qty">200 ml</span></div>
+        </div>
+        <hr class="dots" />
+        <div class="thanks">Thank you · come again</div>
+        <svg class="stamp" viewBox="0 0 118 118" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="59" cy="59" rx="54" ry="42" fill="none" stroke="#8F2D2D" stroke-width="3.2"/>
+          <ellipse cx="59" cy="59" rx="48" ry="36" fill="none" stroke="#8F2D2D" stroke-width="1.4"/>
+          <text x="59" y="68" text-anchor="middle">PAID</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

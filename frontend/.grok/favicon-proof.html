@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #888; font: 12px sans-serif; color: #111; }
+  .grid { display: grid; grid-template-columns: repeat(4, auto); gap: 20px; padding: 20px; }
+  .cell { background: #fff; padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .dark { background: #222; color: #eee; }
+  .zoom { image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<div class="grid">
+
+<div class="cell">
+  <div>A chunky 32</div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="4" fill="#EFE8DC"/>
+    <rect x="6" y="7" width="5" height="18" fill="#1A1612"/>
+    <rect x="21" y="7" width="5" height="18" fill="#1A1612"/>
+    <polygon points="6,7 11,7 16,16 21,7 26,7 16,22" fill="#1A1612"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="4" fill="#EFE8DC"/>
+    <rect x="6" y="7" width="5" height="18" fill="#1A1612"/>
+    <rect x="21" y="7" width="5" height="18" fill="#1A1612"/>
+    <polygon points="6,7 11,7 16,16 21,7 26,7 16,22" fill="#1A1612"/>
+  </svg>
+  <img class="zoom" width="128" height="128" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23EFE8DC'/><rect x='6' y='7' width='5' height='18' fill='%231A1612'/><rect x='21' y='7' width='5' height='18' fill='%231A1612'/><polygon points='6,7 11,7 16,16 21,7 26,7 16,22' fill='%231A1612'/></svg>">
+</div>
+
+<div class="cell">
+  <div>B wide valley</div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="4" fill="#EFE8DC"/>
+    <path fill="#1A1612" d="M6 25V7h5.2L16 16.2 20.8 7H26v18h-5V14.2L16 22.4 11 14.2V25z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="4" fill="#EFE8DC"/>
+    <path fill="#1A1612" d="M6 25V7h5.2L16 16.2 20.8 7H26v18h-5V14.2L16 22.4 11 14.2V25z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="4" fill="#EFE8DC"/>
+    <path fill="#1A1612" d="M6 25V7h5.2L16 16.2 20.8 7H26v18h-5V14.2L16 22.4 11 14.2V25z"/>
+  </svg>
+</div>
+
+<div class="cell">
+  <div>C 16vb integer</div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+    <rect width="16" height="16" rx="2" fill="#EFE8DC"/>
+    <path fill="#1A1612" d="M3 13V3h3l2 5 2-5h3v10h-2.2V6.5L8 12 5.2 6.5V13z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
+    <rect width="16" height="16" rx="2" fill="#EFE8DC"/>
+    <path fill="#1A1612" d="M3 13V3h3l2 5 2-5h3v10h-2.2V6.5L8 12 5.2 6.5V13z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 16 16">
+    <rect width="16" height="16" rx="2" fill="#EFE8DC"/>
+    <path fill="#1A1612" d="M3 13V3h3l2 5 2-5h3v10h-2.2V6.5L8 12 5.2 6.5V13z"/>
+  </svg>
+</div>
+
+<div class="cell dark">
+  <div>A on dark 16</div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="4" fill="#EFE8DC"/>
+    <rect x="6" y="7" width="5" height="18" fill="#1A1612"/>
+    <rect x="21" y="7" width="5" height="18" fill="#1A1612"/>
+    <polygon points="6,7 11,7 16,16 21,7 26,7 16,22" fill="#1A1612"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="4" fill="#EFE8DC"/>
+    <rect x="6" y="7" width="5" height="18" fill="#1A1612"/>
+    <rect x="21" y="7" width="5" height="18" fill="#1A1612"/>
+    <polygon points="6,7 11,7 16,16 21,7 26,7 16,22" fill="#1A1612"/>
+  </svg>
+</div>
+
+</div>
+</body>
+</html>
