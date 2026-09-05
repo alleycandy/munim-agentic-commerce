@@ -8,7 +8,6 @@ const LINKS = [
   { to: "/counter", label: "Counter" },
   { to: "/gaddi", label: "Gaddi" },
   { to: "/offers", label: "Offers" },
-  { to: "/pitch", label: "Pitch" },
 ] as const;
 
 export function SiteShell({ children }: { children: ReactNode }) {

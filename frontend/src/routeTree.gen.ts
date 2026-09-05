@@ -14,7 +14,6 @@ import { Route as AisleRouteImport } from './routes/aisle'
 import { Route as CounterRouteImport } from './routes/counter'
 import { Route as GaddiRouteImport } from './routes/gaddi'
 import { Route as OffersRouteImport } from './routes/offers'
-import { Route as PitchRouteImport } from './routes/pitch'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,11 +40,6 @@ const OffersRoute = OffersRouteImport.update({
   path: '/offers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PitchRoute = PitchRouteImport.update({
-  id: '/pitch',
-  path: '/pitch',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,7 +47,6 @@ export interface FileRoutesByFullPath {
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
   '/offers': typeof OffersRoute
-  '/pitch': typeof PitchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +54,6 @@ export interface FileRoutesByTo {
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
   '/offers': typeof OffersRoute
-  '/pitch': typeof PitchRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,14 +62,13 @@ export interface FileRoutesById {
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
   '/offers': typeof OffersRoute
-  '/pitch': typeof PitchRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aisle' | '/counter' | '/gaddi' | '/offers' | '/pitch'
+  fullPaths: '/' | '/aisle' | '/counter' | '/gaddi' | '/offers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aisle' | '/counter' | '/gaddi' | '/offers' | '/pitch'
-  id: '__root__' | '/' | '/aisle' | '/counter' | '/gaddi' | '/offers' | '/pitch'
+  to: '/' | '/aisle' | '/counter' | '/gaddi' | '/offers'
+  id: '__root__' | '/' | '/aisle' | '/counter' | '/gaddi' | '/offers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -86,7 +77,6 @@ export interface RootRouteChildren {
   CounterRoute: typeof CounterRoute
   GaddiRoute: typeof GaddiRoute
   OffersRoute: typeof OffersRoute
-  PitchRoute: typeof PitchRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -126,13 +116,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OffersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pitch': {
-      id: '/pitch'
-      path: '/pitch'
-      fullPath: '/pitch'
-      preLoaderRoute: typeof PitchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -142,7 +125,6 @@ const rootRouteChildren: RootRouteChildren = {
   CounterRoute: CounterRoute,
   GaddiRoute: GaddiRoute,
   OffersRoute: OffersRoute,
-  PitchRoute: PitchRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
