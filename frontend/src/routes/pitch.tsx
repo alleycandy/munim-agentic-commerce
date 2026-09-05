@@ -21,7 +21,7 @@ function PitchPage() {
         <h2 className="font-display text-3xl">Problem</h2>
         <p className="mt-4 text-ink-soft">
           Agentic commerce is being discussed as a payments problem. For a kirana or a
-          speciality counter it is a <em>visibility</em> problem. Rao & Sons already takes
+          speciality counter it is a <em>visibility</em> problem. Guptaji & Sons already takes
           UPI. Hotel Surya's purchasing agent cannot find the shop, cannot know that
           “poha” means thick, and cannot be told when the shelf has six kilos instead of eight.
           The rupee is not the bottleneck. The description is.
@@ -83,17 +83,19 @@ function PitchPage() {
       <section className="mt-14">
         <h2 className="font-display text-3xl">How to look</h2>
         <ol className="mt-4 list-decimal space-y-2 pl-5 text-ink-soft">
-          <li>Read the story on the first page. It is the brief in a shop's voice.</li>
+          <li>Start on the home page. Use the three-step path (Aisle → Counter → Gaddi) if you want the short tour.</li>
+          <li>
+            On the aisle, pick any SKU and compare the human description with the machine JSON.
+          </li>
           <li>
             On the counter, run <em>the hotel breakfast</em>. Watch stock, substitution, bound,
             capture.
           </li>
-          <li>On the gaddi, arm the trip. Run another order. Watch it stop.</li>
-          <li>On the aisle, read one SKU as a human and as JSON.</li>
+          <li>On the gaddi, arm the trip. Run another order. Watch it stop. Read the tape.</li>
         </ol>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/counter">
-            <Button>Go to the counter</Button>
+          <Link to="/aisle">
+            <Button>Start at the aisle</Button>
           </Link>
           <Link to="/">
             <Button variant="line">Back to the book</Button>

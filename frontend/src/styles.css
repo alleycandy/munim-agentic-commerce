@@ -5,41 +5,41 @@
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --color-paper: #efe8dc;
-  --color-paper-2: #e4dcce;
-  --color-paper-3: #d9d0c0;
-  --color-ink: #1a1612;
-  --color-ink-soft: #3c352e;
-  --color-muted: #6f675c;
-  --color-faint: #9a9286;
-  --color-line: #d0c6b4;
-  --color-tide: #1f4e5a;
-  --color-tide-fg: #efe8dc;
-  --color-stamp: #8f2d2d;
-  --color-ok: #2c5a3c;
-  --color-ok-fg: #efe8dc;
-  --color-receipt: #f7f1e4;
-  --color-night: #141210;
-  --color-night-fg: #e8e0d4;
-  --color-night-muted: #9a9186;
-  --color-night-line: #2c2824;
-  --color-background: #efe8dc;
-  --color-foreground: #1a1612;
-  --color-border: #d0c6b4;
-  --color-primary: #1f4e5a;
-  --color-primary-foreground: #efe8dc;
-  --color-card: #f7f1e4;
-  --color-destructive: #8f2d2d;
-  --color-ring: #1f4e5a;
-  --color-muted-foreground: #6f675c;
+  --color-paper: #faf5ea;
+  --color-paper-2: #f2e7d3;
+  --color-paper-3: #e7d7be;
+  --color-ink: #1f1712;
+  --color-ink-soft: #40332b;
+  --color-muted: #736254;
+  --color-faint: #9c8b7c;
+  --color-line: #decdb5;
+  --color-tide: #b83a14;
+  --color-tide-fg: #faf5ea;
+  --color-stamp: #991b1b;
+  --color-ok: #15803d;
+  --color-ok-fg: #faf5ea;
+  --color-receipt: #fcf8f0;
+  --color-night: #1c1510;
+  --color-night-fg: #f7efe3;
+  --color-night-muted: #a19282;
+  --color-night-line: #362b22;
+  --color-background: #faf5ea;
+  --color-foreground: #1f1712;
+  --color-border: #decdb5;
+  --color-primary: #b83a14;
+  --color-primary-foreground: #faf5ea;
+  --color-card: #fcf8f0;
+  --color-destructive: #991b1b;
+  --color-ring: #b83a14;
+  --color-muted-foreground: #736254;
 
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 22px;
 
-  --shadow-page: 0 1px 0 rgb(26 22 18 / 0.04), 0 12px 32px -16px rgb(26 22 18 / 0.18);
-  --shadow-receipt: 0 0 0 1px rgb(26 22 18 / 0.06), 0 18px 40px -24px rgb(26 22 18 / 0.35);
+  --shadow-page: 0 1px 0 rgb(31 23 18 / 0.04), 0 12px 32px -16px rgb(31 23 18 / 0.18);
+  --shadow-receipt: 0 0 0 1px rgb(31 23 18 / 0.06), 0 18px 40px -24px rgb(31 23 18 / 0.35);
 }
 
 @layer base {

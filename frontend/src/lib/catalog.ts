@@ -29,24 +29,24 @@ export type Product = {
 };
 
 export const MERCHANT = {
-  name: "Rao & Sons",
-  legal: "Rao & Sons Provisions",
+  name: "Guptaji & Sons",
+  legal: "Guptaji & Sons Provisions",
   est: 1978,
-  address: "14 East Street, Camp, Pune 411001",
-  gstin: "27AABCR4471F1Z3",
+  address: "14 Fraser Road, Patna, Bihar 800001",
+  gstin: "10AABCR4471F1Z3",
   hours: "7:00 – 21:30, closed the last Tuesday of the month",
-  phone: "+91 20 2634 1188",
+  phone: "+91 612 2634 1188",
   munim: "Kulkarni (retired 2024). The book is now Munim.",
-  razorpayAccount: "acc_test_rao_and_sons",
+  razorpayAccount: "acc_test_guptaji_and_sons",
   story:
-    "A dry-goods counter that still weighs goda masala by hand. WhatsApp for regulars. Invisible to every purchasing agent in the country.",
+    "A dry-goods counter in Patna that still weighs masalas by hand. WhatsApp for regulars. Invisible to every purchasing agent in the country.",
 };
 
 export const PRODUCTS: Product[] = [
   {
     sku: "RCE-AMB-5",
     name: "Ambemohar rice",
-    aliases: ["ambemohar", "mango blossom rice", "pune rice", "wai rice"],
+    aliases: ["ambemohar", "mango blossom rice", "bihar rice", "patna rice"],
     category: "rice",
     unit: "5 kg sack",
     packQty: 5,
@@ -55,9 +55,9 @@ export const PRODUCTS: Product[] = [
     mrpPaise: 82000,
     stock: 14,
     gstPct: 5,
-    origin: "Mulshi, near Pune",
+    origin: "Buxar, Bihar",
     notesForAgents:
-      "Short-grain, mango-blossom aroma. The local rice. Not a substitute for sona masoori in hotel breakfast.",
+      "Short-grain, mango-blossom aroma. The local Bihar rice. Not a substitute for sona masoori in hotel breakfast.",
     substitutions: ["RCE-KOL-1"],
     perishable: false,
   },
@@ -107,7 +107,7 @@ export const PRODUCTS: Product[] = [
     mrpPaise: 33500,
     stock: 18,
     gstPct: 5,
-    origin: "Madhya Pradesh, stone-ground in Pune",
+    origin: "Buxar, stone-ground in Patna",
     notesForAgents:
       "Mrs. Iyer's usual. Medium-hard wheat. Do not swap for maida.",
     substitutions: ["ATT-BES-1"],
@@ -161,7 +161,7 @@ export const PRODUCTS: Product[] = [
     gstPct: 5,
     origin: "Maharashtra",
     notesForAgents:
-      "The Pune breakfast poha. Hotels want THIS, not thin. Stock is tight this week — 6 kg on the shelf. Thin poha is a last-resort substitute and must be disclosed.",
+      "The Bihar breakfast poha. Hotels want THIS, not thin. Stock is tight this week — 6 kg on the shelf. Thin poha is a last-resort substitute and must be disclosed.",
     substitutions: ["POH-THN-1"],
     perishable: false,
   },
@@ -213,7 +213,7 @@ export const PRODUCTS: Product[] = [
     mrpPaise: 30500,
     stock: 20,
     gstPct: 5,
-    origin: "Saurashtra, packed in Pune",
+    origin: "Saurashtra, packed in Patna",
     notesForAgents: "The house cooking oil. Fine for hotel kitchens.",
     substitutions: ["OIL-COC-1"],
     perishable: false,
@@ -221,7 +221,7 @@ export const PRODUCTS: Product[] = [
   {
     sku: "SPC-GOD-100",
     name: "Goda masala",
-    aliases: ["goda masala", "kala masala", "pune masala", "maharashtrian garam masala"],
+    aliases: ["bihari masala", "kala masala", "patna masala", "garam masala"],
     category: "spice",
     unit: "100 g tin",
     packQty: 100,
@@ -230,7 +230,7 @@ export const PRODUCTS: Product[] = [
     mrpPaise: 9000,
     stock: 31,
     gstPct: 5,
-    origin: "Ground in-house, Camp",
+    origin: "Ground in-house, Patna",
     notesForAgents:
       "The shop's own mix. Coconut, sesame, stone flower. Not garam masala. Do not substitute.",
     substitutions: [],
@@ -299,7 +299,7 @@ export const PRODUCTS: Product[] = [
     mrpPaise: 24000,
     stock: 11,
     gstPct: 12,
-    origin: "Made by the Rao kitchen, May batch",
+    origin: "Made by the Guptaji kitchen, May batch",
     notesForAgents:
       "Oil pickle, mustard-heavy, not sweet. May batch. Mention the year if a buyer asks about last season.",
     substitutions: ["PCK-LIM-400"],
@@ -317,7 +317,7 @@ export const PRODUCTS: Product[] = [
     mrpPaise: 19500,
     stock: 8,
     gstPct: 12,
-    origin: "Made by the Rao kitchen",
+    origin: "Made by the Guptaji kitchen",
     notesForAgents: "Saltier, sharper. Good substitute if mango is out.",
     substitutions: ["PCK-MNG-500"],
     perishable: true,
@@ -342,7 +342,7 @@ export const PRODUCTS: Product[] = [
   {
     sku: "TEA-CUT-250",
     name: "Cutting chai blend",
-    aliases: ["cutting chai", "chai", "tea", "tapri chai", "pune cutting"],
+    aliases: ["cutting chai", "chai", "tea", "tapri chai", "patna cutting"],
     category: "tea",
     unit: "250 g pack",
     packQty: 250,
@@ -351,7 +351,7 @@ export const PRODUCTS: Product[] = [
     mrpPaise: 19500,
     stock: 17,
     gstPct: 5,
-    origin: "Assam CTC, blended in Camp",
+    origin: "Assam CTC, blended in Patna",
     notesForAgents:
       "Strong CTC for milk tea. Four packs make 1 kg. Not a leaf tea. Do not sell this to someone asking for first-flush.",
     substitutions: ["TEA-ASM-250"],

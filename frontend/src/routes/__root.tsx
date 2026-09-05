@@ -15,7 +15,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "An agentic commerce counter for Indian merchants. Rao & Sons, Camp, Pune. Bounded payments, an audit trail, and a shop that AI buyers can actually find.",
+          "An agentic commerce counter for Indian merchants. Rao & Sons, Fraser Road, Patna, Bihar. Bounded payments, an audit trail, and a shop that AI buyers can actually find.",
       },
       { name: "theme-color", content: "#EFE8DC" },
     ],

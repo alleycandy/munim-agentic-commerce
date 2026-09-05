@@ -5,7 +5,7 @@ import { MERCHANT } from "@/lib/catalog";
 import { cn } from "@/lib/utils";
 
 const SHOPS = [
-  "Rao & Sons, Camp, Pune",
+  "Rao & Sons, Fraser Road, Patna, Bihar",
   "Meenakshi Stores, Malleswaram",
   "Gupta Tea Depot, Chandni Chowk",
   "Al-Ameen Kirana, Charminar",
@@ -34,6 +34,7 @@ export function Story() {
   return (
     <main>
       <Hero />
+      <SimplePath />
       <HumanMorning />
       <AgentMorning />
       <Invisible />
@@ -56,7 +57,7 @@ function Hero() {
             <span className="mt-2 block italic text-ink-soft">The agents can't find the door.</span>
           </h1>
           <p className="mt-8 max-w-xl text-lg text-ink-soft">
-            Rao & Sons has kept a wooden counter on East Street since {MERCHANT.est}.
+            Guptaji & Sons has kept a wooden counter on Fraser Road, Patna since {MERCHANT.est}.
             Mrs. Iyer still comes on the third of the month. This year the buyers started
             arriving as software. They can see the apps. They cannot see this shop.
           </p>
@@ -83,33 +84,209 @@ function Hero() {
 
 function HeroReceipt() {
   return (
-    <div className="relative mx-auto w-full max-w-sm lg:mt-6">
-      <div className="absolute -left-6 top-10 hidden rotate-[-12deg] font-display text-sm italic text-stamp sm:block">
+    <div className="relative mx-auto w-full max-w-md lg:mt-4">
+      <div className="absolute -left-8 top-6 hidden rotate-[-12deg] font-display text-sm italic text-stamp sm:block z-10">
         from this morning
       </div>
-      <div className="rotate-[2.5deg] bg-receipt p-6 shadow-[var(--shadow-receipt)]">
-        <p className="text-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-          {MERCHANT.name} · {MERCHANT.address.split(",")[1]}
-        </p>
-        <p className="mt-2 text-center font-display text-2xl">7:12 am chit</p>
-        <div className="mt-5 space-y-2 border-t border-dashed border-line pt-4 font-mono text-xs">
-          <Row k="4 × thick poha" v="₹380" />
-          <Row k="2 × cutting chai" v="₹360" />
-          <Row k="GST 5%" v="₹37" />
-          <Row k="To pay" v="₹777" bold />
+      <div className="rotate-[1.5deg] transition-transform duration-300 hover:rotate-0 rounded-[2px] bg-[#FAF7F2] p-5 shadow-[0_16px_40px_rgba(0,0,0,0.18),0_2px_10px_rgba(0,0,0,0.08)] border border-[#E2DAD0] text-[#1D1915] font-mono text-xs">
+        {/* Top serrated paper edge */}
+        <div
+          className="h-2 w-full -mt-5 mb-3"
+          style={{
+            backgroundImage:
+              "linear-gradient(135deg, #FAF7F2 50%, transparent 50%), linear-gradient(225deg, #FAF7F2 50%, transparent 50%)",
+            backgroundPosition: "top left",
+            backgroundSize: "10px 8px",
+            backgroundRepeat: "repeat-x",
+          }}
+        />
+
+        {/* Store Tax Header */}
+        <div className="text-center border-b border-dashed border-[#C5BBAA] pb-3">
+          <h2 className="font-bold text-sm tracking-wider uppercase text-[#1D1915]">
+            GUPTAJI & SONS GENERAL STORES
+          </h2>
+          <p className="text-[10px] text-[#635A4F] uppercase tracking-wider font-semibold mt-0.5">
+            Provisions, Spices & Dry Goods
+          </p>
+          <p className="text-[10px] text-[#4A433A] mt-1 font-sans font-medium leading-tight">
+            14 Fraser Road, Dak Bungalow Chowk
+            <br />
+            Patna, Bihar — 800001
+          </p>
+          <p className="text-[9.5px] text-[#6E6558] mt-1 tracking-tight">
+            Ph: +91 612 2634 1188 | GSTIN: 10AABCR4471F1Z3
+          </p>
         </div>
-        <p className="mt-4 font-mono text-[11px] text-muted">
-          Buyer: Hotel Surya purchasing agent
-          <br />
-          Mandate man-8f2a · auto-approved
-          <br />
-          pay_test_rzp9k · captured
-        </p>
-        <div className="mt-6 flex justify-end">
-          <span className="stamp text-ok">Paid</span>
+
+        {/* Invoice Metadata */}
+        <div className="mt-2.5 flex items-center justify-between text-[10px] font-semibold text-[#3D362E] border-b border-dashed border-[#C5BBAA] pb-2">
+          <span>TAX INVOICE / CASH MEMO</span>
+          <span>05-SEP-2026 07:12 AM</span>
         </div>
+
+        <div className="mt-2 text-[10.5px] space-y-0.5 text-[#332D25]">
+          <p><span className="text-[#6E6558]">Inv No:</span> PAT-2026/09/0421</p>
+          <p><span className="text-[#6E6558]">Buyer:</span> Hotel Surya (Procurement Agent)</p>
+        </div>
+
+        {/* Table Header */}
+        <div className="mt-3 border-t border-b border-[#2C2620] py-1 font-bold text-[10px] text-[#1D1915] flex justify-between tracking-wider">
+          <span className="w-1/2">ITEM DESCRIPTION</span>
+          <span className="w-1/4 text-center">QTY</span>
+          <span className="w-1/4 text-right">AMOUNT</span>
+        </div>
+
+        {/* Items */}
+        <div className="my-2 space-y-1.5 text-[11px] text-[#1D1915]">
+          <div className="flex justify-between items-start">
+            <div className="w-1/2 pr-1">
+              <span className="font-semibold block">Thick Poha (Jada)</span>
+              <span className="text-[9.5px] text-[#786D5F] block font-sans">SKU: POH-THK-1</span>
+            </div>
+            <div className="w-1/4 text-center tabular-nums text-[#4A433A]">4 kg</div>
+            <div className="w-1/4 text-right tabular-nums font-medium">₹380.00</div>
+          </div>
+          <div className="flex justify-between items-start">
+            <div className="w-1/2 pr-1">
+              <span className="font-semibold block">Cutting Chai Blend</span>
+              <span className="text-[9.5px] text-[#786D5F] block font-sans">SKU: TEA-CUT-250</span>
+            </div>
+            <div className="w-1/4 text-center tabular-nums text-[#4A433A]">2 pk</div>
+            <div className="w-1/4 text-right tabular-nums font-medium">₹360.00</div>
+          </div>
+        </div>
+
+        {/* Totals & Tax */}
+        <div className="mt-3 border-t border-dashed border-[#C5BBAA] pt-2 space-y-1 text-[10.5px] tabular-nums text-[#332D25]">
+          <div className="flex justify-between">
+            <span className="text-[#6E6558]">Subtotal (Excl. Tax):</span>
+            <span>₹740.00</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-[#6E6558]">CGST @ 2.5%:</span>
+            <span>₹18.50</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-[#6E6558]">SGST @ 2.5%:</span>
+            <span>₹18.50</span>
+          </div>
+          <div className="mt-2 border-t-2 border-double border-[#1D1915] pt-1.5 flex justify-between text-sm font-bold text-[#1D1915]">
+            <span>NET TOTAL AMOUNT:</span>
+            <span>₹777.00</span>
+          </div>
+        </div>
+
+        {/* Agentic Payment Details */}
+        <div className="mt-3 border-t border-dashed border-[#C5BBAA] pt-2 text-[10px] text-[#4A433A] space-y-0.5">
+          <p className="font-bold text-[9.5px] uppercase tracking-wider text-[#6E6558]">
+            PAYMENT METHOD: RAZORPAY AGENTIC UPI
+          </p>
+          <p>Mandate ID: <span className="font-bold">man-8f2a</span> (auto-approved)</p>
+          <p>Txn Ref: <span className="font-bold">pay_test_rzp9k</span> (captured)</p>
+        </div>
+
+        {/* Rubber Stamp */}
+        <div className="mt-4 flex justify-center py-1">
+          <div className="border-2 border-[#1E6B3C] text-[#1E6B3C] px-3 py-1.5 rounded-sm transform -rotate-6 font-bold text-center tracking-wider bg-[#1E6B3C]/5 shadow-sm">
+            <div className="text-[13px] leading-tight font-serif uppercase">★ PAID & CAPTURED ★</div>
+            <div className="text-[9px] font-mono font-normal">GUPTAJI & SONS · PATNA, BIHAR</div>
+          </div>
+        </div>
+
+        {/* Barcode & Footer */}
+        <div className="mt-4 text-center border-t border-dashed border-[#C5BBAA] pt-2.5">
+          <div className="font-mono text-xs tracking-[0.3em] font-bold text-[#3D362E] select-none">
+            ||| | |||| || | ||||| |||| ||| ||| | ||
+          </div>
+          <p className="mt-1 text-[9px] font-medium uppercase tracking-wider text-[#6E6558]">
+            DHANYAWAD! THANK YOU FOR SHOPPING
+          </p>
+          <p className="text-[8.5px] text-[#8C8172]">
+            Guptaji & Sons · Fraser Road, Patna, Bihar
+          </p>
+        </div>
+
+        {/* Bottom serrated paper edge */}
+        <div
+          className="h-2 w-full -mb-5 mt-3"
+          style={{
+            backgroundImage:
+              "linear-gradient(45deg, #FAF7F2 50%, transparent 50%), linear-gradient(315deg, #FAF7F2 50%, transparent 50%)",
+            backgroundPosition: "bottom left",
+            backgroundSize: "10px 8px",
+            backgroundRepeat: "repeat-x",
+          }}
+        />
       </div>
     </div>
+  );
+}
+
+function SimplePath() {
+  const steps = [
+    {
+      n: "01",
+      title: "Look at the aisle",
+      desc: "See what an AI agent is allowed to know about the shop — SKUs, stock, substitutions, GST.",
+      to: "/aisle",
+      cta: "Open the aisle",
+    },
+    {
+      n: "02",
+      title: "Talk at the counter",
+      desc: "Send a purchasing agent. Watch Munim quote, bound the money, and take payment — like the old ledger.",
+      to: "/counter",
+      cta: "Go to the counter",
+    },
+    {
+      n: "03",
+      title: "Sit at the gaddi",
+      desc: "Change the wall rules, approve big mandates, trip a payment to see failure handled cleanly.",
+      to: "/gaddi",
+      cta: "Open the gaddi",
+    },
+  ];
+
+  return (
+    <section className="border-t border-line bg-paper-2/40">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted">Start here · three doors</p>
+            <h2 className="mt-2 font-display text-3xl tracking-tight sm:text-4xl">
+              A simple path for the first visit
+            </h2>
+          </div>
+          <p className="max-w-sm text-sm text-muted">
+            The story below is the full book. If you just want to try the shop, walk these three steps.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {steps.map((s) => (
+            <div
+              key={s.n}
+              className="group relative flex flex-col rounded-[18px] border border-line bg-paper p-5 shadow-[var(--shadow-page)] transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="font-mono text-xs uppercase tracking-[0.18em] text-muted">{s.n}</span>
+                <span className="stamp text-[10px] opacity-70 group-hover:opacity-100">Step</span>
+              </div>
+              <h3 className="mt-3 font-display text-xl tracking-tight">{s.title}</h3>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-soft">{s.desc}</p>
+              <div className="mt-5">
+                <Link to={s.to}>
+                  <Button size="sm" variant="line" className="w-full sm:w-auto">
+                    {s.cta}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -126,7 +303,7 @@ function HumanMorning() {
   return (
     <section className="border-t border-line bg-paper-2/60">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[0.4fr_1fr]">
-        <Chapter n="01" kicker="East Street, 7:12 am" />
+        <Chapter n="01" kicker="Fraser Road, Patna, 7:12 am" />
         <div>
           <h2 className="display-section">The usual.</h2>
           <p className="mt-6 max-w-2xl text-lg text-ink-soft">
@@ -161,7 +338,7 @@ function AgentMorning() {
   return (
     <section className="bg-night text-night-fg">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[0.4fr_1fr]">
-        <Chapter n="02" kicker="Koregaon Park, same morning" night />
+        <Chapter n="02" kicker="Patna Junction, same morning" night />
         <div>
           <h2 className="display-section">The agent that couldn't.</h2>
           <p className="mt-6 max-w-2xl text-lg text-night-muted">
@@ -173,13 +350,13 @@ function AgentMorning() {
             place from last time.”
           </blockquote>
           <p className="mt-10 max-w-2xl text-night-muted">
-            Last time was Rao & Sons, on a WhatsApp voice note, paid by UPI to a number
-            saved as “Rao Camp oil”. The agent can see BigBasket, Zepto, and a national
-            grocery API. It cannot see East Street. It buys the thin poha from a warehouse in
+            Last time was Guptaji & Sons, on a WhatsApp voice note, paid by UPI to a number
+            saved as “Guptaji Patna oil”. The agent can see BigBasket, Zepto, and a national
+            grocery API. It cannot see Fraser Road. It buys the thin poha from a warehouse in
             Bhiwandi because “poha” matched and the price cleared the ceiling.
           </p>
           <p className="mt-6 max-w-2xl text-night-fg">
-            Forty rooms eat the wrong breakfast. Rao & Sons does not know it was asked.
+            Forty rooms eat the wrong breakfast. Guptaji & Sons does not know it was asked.
           </p>
         </div>
       </div>
@@ -198,7 +375,7 @@ function Invisible() {
             <h2 className="display-section">Twelve million shops, zero listings.</h2>
             <p className="mt-6 max-w-2xl text-lg text-ink-soft">
               India's kirana and speciality counters still hold the country's real
-              inventory: the goda masala ground that morning, the Ambemohar from Mulshi, the
+              inventory: the Bihari masala ground that morning, the Katarni Rice from Buxar, the
               pickle that is not on any app. They take UPI. They are, to an agent, a blank
               page.
             </p>
@@ -348,20 +525,24 @@ function Close() {
       <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <p className="text-xs uppercase tracking-[0.22em] text-muted">Open the shop</p>
         <h2 className="display-section mt-4 max-w-3xl">
-          Send a purchasing agent to East Street. Or sit where Kulkarni sat.
+          Send a purchasing agent to Fraser Road, Patna. Or sit where Kulkarni sat.
         </h2>
+        <p className="mt-5 max-w-2xl text-ink-soft">
+          Remember the three doors: first the aisle (what the machine sees), then the counter
+          (talk and pay), then the gaddi (rules and the book). That is the whole sequence.
+        </p>
         <div className="mt-10 flex flex-wrap gap-3">
+          <Link to="/aisle">
+            <Button size="lg" variant="ghost">
+              1 · Aisle
+            </Button>
+          </Link>
           <Link to="/counter">
-            <Button size="lg">The counter</Button>
+            <Button size="lg">2 · Counter</Button>
           </Link>
           <Link to="/gaddi">
             <Button size="lg" variant="line">
-              The gaddi
-            </Button>
-          </Link>
-          <Link to="/aisle">
-            <Button size="lg" variant="ghost">
-              The aisle, as a machine reads it
+              3 · Gaddi
             </Button>
           </Link>
         </div>

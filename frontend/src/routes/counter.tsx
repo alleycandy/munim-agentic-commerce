@@ -92,12 +92,24 @@ function CounterPage() {
   return (
     <main className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.15fr_0.85fr]">
       <section className="min-w-0">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted">The counter · East Street</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-muted">The counter · Fraser Road, Patna · step 2 of 3</p>
         <h1 className="mt-2 font-display text-4xl tracking-tight sm:text-5xl">Speak like a buyer who never walks in.</h1>
         <p className="mt-4 max-w-xl text-ink-soft">
           You are a purchasing agent. Munim will match, disclose, quote from the book, and
           take a bounded payment. The model does not own the till.
         </p>
+
+        <div className="mt-5 rounded-[16px] border border-line bg-paper-2/70 p-4">
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+            First time here?
+          </p>
+          <p className="mt-2 text-sm text-ink-soft">
+            Press <strong className="text-ink">Run the hotel breakfast</strong> below. It plays a full
+            order end-to-end (stock check → substitute → mandate → payment). Watch the receipt on the
+            right update. Then try typing your own request, or go to the gaddi to change rules.
+          </p>
+        </div>
+
         <div className="mt-5 flex flex-wrap gap-2">
           <Button onClick={playScript} disabled={busy} variant="ink">
             {playing ? "Breakfast order running…" : "Run the hotel breakfast"}
@@ -113,7 +125,7 @@ function CounterPage() {
             Clear the counter
           </Button>
           <Link to="/gaddi" className="inline-flex">
-            <Button variant="ghost">Trip a payment on the gaddi</Button>
+            <Button variant="ghost">Next → Gaddi (step 3)</Button>
           </Link>
         </div>
 

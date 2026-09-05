@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 
 const LINKS = [
   { to: "/", label: "The book" },
+  { to: "/aisle", label: "Aisle" },
   { to: "/counter", label: "Counter" },
   { to: "/gaddi", label: "Gaddi" },
-  { to: "/aisle", label: "Aisle" },
   { to: "/pitch", label: "Pitch" },
 ] as const;
 
@@ -20,7 +20,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <Link to="/" className="flex min-w-0 items-baseline gap-2">
             <span className="font-display text-xl tracking-tight text-ink">Munim</span>
             <span className="hidden truncate text-xs text-muted sm:inline">
-              Rao & Sons · Camp, Pune
+              Guptaji & Sons · Fraser Road, Patna, Bihar
             </span>
           </Link>
           <nav className="flex items-center gap-0.5 overflow-x-auto text-sm">

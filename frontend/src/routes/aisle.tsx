@@ -36,16 +36,27 @@ function AislePage() {
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <p className="text-xs uppercase tracking-[0.2em] text-muted">The aisle · agent-readable</p>
+      <p className="text-xs uppercase tracking-[0.2em] text-muted">The aisle · agent-readable · step 1 of 3</p>
       <h1 className="mt-2 max-w-3xl font-display text-4xl tracking-tight sm:text-5xl">
         What a machine is allowed to know.
       </h1>
       <p className="mt-4 max-w-2xl text-ink-soft">
-        A human walking East Street can smell the pickle. An agent gets a catalog: SKU, aliases
+        A human walking Fraser Road, Patna can smell the pickle. An agent gets a catalog: SKU, aliases
         (including the Hinglish), stock, GST, substitutions, and a note that is a constraint, not
         marketing. This is the missing half of agentic payments — NPCI can move the rupee; someone
         still has to describe the sack.
       </p>
+
+      <div className="mt-5 rounded-[16px] border border-line bg-paper-2/70 p-4">
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+          Simple path
+        </p>
+        <p className="mt-2 text-sm text-ink-soft">
+          Pick any product below to see the human view and the exact JSON an agent receives.
+          When you are ready, go to the <strong className="text-ink">Counter</strong> to place an order.
+        </p>
+      </div>
+
       <div className="mt-6">
         <Button variant="line" onClick={() => void copyAll()}>
           {copied ? "Copied the aisle" : "Copy the full catalog as JSON"}
@@ -96,7 +107,7 @@ function AislePage() {
         <Protocol
           n="01"
           t="Describe"
-          d="Aliases, pack size, GST, perishability, substitutions. The things a warehouse SKU file pretends not to need and a Pune counter cannot live without."
+          d="Aliases, pack size, GST, perishability, substitutions. The things a warehouse SKU file pretends not to need and a Bihar counter cannot live without."
         />
         <Protocol
           n="02"

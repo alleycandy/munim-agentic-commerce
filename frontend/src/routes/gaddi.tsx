@@ -18,12 +18,23 @@ function GaddiPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <p className="text-xs uppercase tracking-[0.2em] text-muted">The gaddi · {MERCHANT.address}</p>
+      <p className="text-xs uppercase tracking-[0.2em] text-muted">The gaddi · {MERCHANT.address} · step 3 of 3</p>
       <h1 className="mt-2 font-display text-4xl tracking-tight sm:text-5xl">Where the book is kept.</h1>
       <p className="mt-4 max-w-2xl text-ink-soft">
         Kulkarni sat here with a red ledger and a glass of cutting. You sit here with the same
         job: watch the till, change the wall rules, and say no when an agent gets greedy.
       </p>
+
+      <div className="mt-5 rounded-[16px] border border-line bg-paper-2/70 p-4">
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+          Simple path · last stop
+        </p>
+        <p className="mt-2 text-sm text-ink-soft">
+          Here you control the shop. Change auto-approve limits, arm the “trip payment” switch to
+          watch a failure, approve held mandates, and read the audit tape. Everything an agent
+          does is recorded in the book.
+        </p>
+      </div>
 
       <dl className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Stat k="Today's agent take" v={formatInr(take)} />
