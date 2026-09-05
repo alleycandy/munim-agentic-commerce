@@ -171,33 +171,35 @@ function CounterPage() {
           )}
         </div>
 
-        <form
-          className="mt-4 flex gap-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-            void onSend(draft);
-          }}
-        >
-          <label className="sr-only" htmlFor="buyer-line">
-            Message to Munim
-          </label>
-          <input
-            id="buyer-line"
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            placeholder="8 kg thick poha, stay under two thousand…"
-            className="h-12 min-w-0 flex-1 rounded-[12px] bg-receipt px-4 text-ink shadow-[0_0_0_1px_var(--color-line)] placeholder:text-faint focus:outline-none focus:shadow-[0_0_0_2px_var(--color-tide)]"
-            disabled={busy}
-          />
-          <Button type="submit" disabled={busy || !draft.trim()} size="lg">
-            Send
-          </Button>
-        </form>
-        {error ? <p className="mt-3 text-sm text-stamp">{error}</p> : null}
-        <p className="mt-3 text-xs text-muted">
-          Auto-approve below {formatInr(policy.autoApproveBelowPaise)}. Shop cap{" "}
-          {formatInr(policy.maxOrderPaise)}. One retry.
-        </p>
+        <div className="sticky bottom-0 z-30 mt-4 rounded-[16px] bg-paper/95 p-3 backdrop-blur-md border border-line shadow-md">
+          <form
+            className="flex gap-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              void onSend(draft);
+            }}
+          >
+            <label className="sr-only" htmlFor="buyer-line">
+              Message to Munim
+            </label>
+            <input
+              id="buyer-line"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder="8 kg thick poha, stay under two thousand…"
+              className="h-12 min-w-0 flex-1 rounded-[12px] bg-receipt px-4 text-ink shadow-[0_0_0_1px_var(--color-line)] placeholder:text-faint focus:outline-none focus:shadow-[0_0_0_2px_var(--color-tide)]"
+              disabled={busy}
+            />
+            <Button type="submit" disabled={busy || !draft.trim()} size="lg">
+              Send
+            </Button>
+          </form>
+          {error ? <p className="mt-2 text-sm text-stamp">{error}</p> : null}
+          <p className="mt-2 text-xs text-muted">
+            Auto-approve below {formatInr(policy.autoApproveBelowPaise)}. Shop cap{" "}
+            {formatInr(policy.maxOrderPaise)}. One retry.
+          </p>
+        </div>
       </section>
 
       <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
@@ -231,7 +233,7 @@ function CounterPage() {
 function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
   const categories = [
     {
-      label: "🏨 Hotels & Guest Houses",
+      label: "HOTELS & GUEST HOUSES",
       prompts: [
         "Hotel Surya. Breakfast for forty rooms. 8 kg thick poha, 2 litres coconut oil, 1 kg cutting chai. Under ₹2000.",
         "Patna Residency Hotel. Daily kitchen restock: 25 kg sona masoori, 5L groundnut oil, 2 kg toor dal, 1 kg turmeric. Give me the total.",
@@ -243,7 +245,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
       ],
     },
     {
-      label: "🍽️ Dhabas & Canteens",
+      label: "DHABAS & CANTEENS",
       prompts: [
         "Canteen order: 20 kg sona masoori, 10L groundnut oil. We can go to ₹8,000.",
         "Highway dhaba, NH31. Weekly: 10L mustard oil, 5 kg toor dal, 2 kg chilli powder, 1 kg jeera, 1 kg turmeric.",
@@ -254,7 +256,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
       ],
     },
     {
-      label: "🏠 Households & Regulars",
+      label: "HOUSEHOLDS & REGULARS",
       prompts: [
         "Iyer household. The usual 5 kg Lokwan atta and a jar of the May mango pickle.",
         "Sharma ji here. 2 kg sattu, 1 kg masoor dal, 500g hing — wait, do you even stock hing?",
@@ -265,7 +267,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
       ],
     },
     {
-      label: "🎉 Events & Festivals",
+      label: "EVENTS & FESTIVALS",
       prompts: [
         "Wedding catering, 500 guests. Need 50 kg basmati, 20 kg ghee, 10 kg cashews, 5 kg almonds, 5 kg raisins. Quote.",
         "Chhat Puja prasad: 5 kg til, 10 kg gur, 2 kg rice, 1 kg coconut oil. Festival special rate?",
@@ -275,7 +277,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
       ],
     },
     {
-      label: "🔄 Substitution & Stock Tests",
+      label: "SUBSTITUTION & STOCK TESTS",
       prompts: [
         "I need 10 kg thick poha. Any issues with stock?",
         "Coconut oil, 5 litres. If you're out, what's the alternative at similar quality?",
@@ -287,7 +289,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
       ],
     },
     {
-      label: "💰 Budget & Negotiation",
+      label: "BUDGET & NEGOTIATION",
       prompts: [
         "Total budget ₹1500. What can I get for breakfast supplies for 20 people?",
         "₹5000 budget for a week's household groceries. Suggest what to pick from your catalog.",
@@ -297,7 +299,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
       ],
     },
     {
-      label: "📋 Bulk & Commercial",
+      label: "BULK & COMMERCIAL",
       prompts: [
         "School hostel, 80 students. Monthly supply of atta, rice, dal, oil, sugar. Give me a full quote.",
         "Nursing home kitchen. Weekly: 10 kg masoor dal, 10L mustard oil, 5 kg rava, 3 kg tea, 2 kg turmeric.",
@@ -307,7 +309,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
       ],
     },
     {
-      label: "🧪 Edge Cases",
+      label: "EDGE CASES",
       prompts: [
         "Do you sell items not in your catalog? I'm looking for bread.",
         "I want to return last week's lime pickle — jar was leaking. How do you handle that?",
