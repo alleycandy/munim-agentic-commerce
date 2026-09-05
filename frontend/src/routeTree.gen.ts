@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AisleRouteImport } from './routes/aisle'
+import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as CounterRouteImport } from './routes/counter'
 import { Route as GaddiRouteImport } from './routes/gaddi'
 import { Route as PitchRouteImport } from './routes/pitch'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AisleRoute = AisleRouteImport.update({
   id: '/aisle',
   path: '/aisle',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampaignsRoute = CampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CounterRoute = CounterRouteImport.update({
@@ -44,6 +50,7 @@ const PitchRoute = PitchRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aisle': typeof AisleRoute
+  '/campaigns': typeof CampaignsRoute
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
   '/pitch': typeof PitchRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aisle': typeof AisleRoute
+  '/campaigns': typeof CampaignsRoute
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
   '/pitch': typeof PitchRoute
@@ -59,21 +67,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/aisle': typeof AisleRoute
+  '/campaigns': typeof CampaignsRoute
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
   '/pitch': typeof PitchRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aisle' | '/counter' | '/gaddi' | '/pitch'
+  fullPaths: '/' | '/aisle' | '/campaigns' | '/counter' | '/gaddi' | '/pitch'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aisle' | '/counter' | '/gaddi' | '/pitch'
-  id: '__root__' | '/' | '/aisle' | '/counter' | '/gaddi' | '/pitch'
+  to: '/' | '/aisle' | '/campaigns' | '/counter' | '/gaddi' | '/pitch'
+  id:
+    | '__root__'
+    | '/'
+    | '/aisle'
+    | '/campaigns'
+    | '/counter'
+    | '/gaddi'
+    | '/pitch'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AisleRoute: typeof AisleRoute
+  CampaignsRoute: typeof CampaignsRoute
   CounterRoute: typeof CounterRoute
   GaddiRoute: typeof GaddiRoute
   PitchRoute: typeof PitchRoute
@@ -93,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/aisle'
       fullPath: '/aisle'
       preLoaderRoute: typeof AisleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campaigns': {
+      id: '/campaigns'
+      path: '/campaigns'
+      fullPath: '/campaigns'
+      preLoaderRoute: typeof CampaignsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/counter': {
@@ -122,6 +146,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AisleRoute: AisleRoute,
+  CampaignsRoute: CampaignsRoute,
   CounterRoute: CounterRoute,
   GaddiRoute: GaddiRoute,
   PitchRoute: PitchRoute,

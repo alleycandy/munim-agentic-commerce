@@ -300,3 +300,67 @@ function isAction(value: unknown): value is AgentAction {
   }
   return false;
 }
+
+export type GenerateCampaignInput = {
+  goal: string;
+};
+
+export const generateCampaignStrategyFn = createServerFn({ method: "POST" })
+  .validator((input: GenerateCampaignInput) => input)
+  .handler(async ({ data }): Promise<{ ok: true; strategy: any } | { ok: false; error: string }> => {
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      return { ok: false, error: "GEMINI_API_KEY is missing in .env" };
+    }
+
+    const prompt = `You are the Growth & Marketing Campaign Orchestrator for Guptaji & Sons, Fraser Road, Patna, Bihar.
+The merchant wants to create a new campaign to attract more customers.
+
+MERCHANT GOAL: "${data.goal}"
+
+Generate a highly strategic, high-converting campaign in valid JSON format only (no markdown, no triple backticks).
+Include the following exact keys:
+{
+  "title": "Short catchy campaign title",
+  "description": "2-sentence promotional description tailored for Patna/Bihar market or AI buyer agents",
+  "targetAudience": "hotels_dhabas" OR "ai_agents" OR "halwais_caterers" OR "retail_households" OR "all_buyers",
+  "targetLabel": "Readable target description (e.g. Fraser Rd Hotel Managers, Autonomous AI Procurement Agents)",
+  "channels": ["agent_protocol", "whatsapp_b2b", "sms_broadcast"],
+  "discountType": "percentage" OR "fixed_amount",
+  "discountValue": 10 (percentage like 10 or 15) OR 25000 (fixed amount in paise, e.g. 25000 = ₹250),
+  "minOrderValuePaise": 200000 (min order value in paise, e.g. 200000 = ₹2000),
+  "badge": "Short badge with emoji (e.g. 🏨 Hotel Saver, 🪔 Mahaparv Deal, 🤖 AI Protocol)",
+  "aiGeneratedReasoning": "1 sentence strategic rationale explaining why this campaign will attract customers & boost ROAS.",
+  "appliedCategories": ["rice", "oil", "spice"]
+}`;
+
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.3, responseMimeType: "application/json" },
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        return { ok: false, error: `Gemini API returned ${res.status}` };
+      }
+
+      const json = await res.json();
+      const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) {
+        return { ok: false, error: "Empty response from Gemini" };
+      }
+
+      const strategy = JSON.parse(text);
+      return { ok: true, strategy };
+    } catch (e: any) {
+      return { ok: false, error: e?.message || "Failed to generate campaign strategy" };
+    }
+  });
+
