@@ -315,48 +315,6 @@ function fallbackMunimTurn(data: AskInput): AgentTurn {
     actions,
   };
 }
-    const messages = [
-      { role: "system" as const, content: systemPrompt },
-      ...data.messages.map((m) => ({
-        role: (m.role === "buyer" ? "user" : "assistant") as "user" | "assistant",
-        content: m.text,
-      })),
-    ];
-
-    const res = await fetch("https://api.x.ai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${xaiKey}`,
-      },
-      body: JSON.stringify({
-        model: "grok-4.5",
-        temperature: 0.4,
-        max_tokens: 900,
-        messages,
-      }),
-    });
-
-    if (!res.ok) {
-      return {
-        ok: false,
-        error: `The counter could not reach the model (${res.status}). Try the scripted breakfast order.`,
-      };
-    }
-
-    const body = (await res.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
-    const raw = body.choices?.[0]?.message?.content ?? "";
-    const turn = parseTurn(raw);
-    if (!turn) {
-      return {
-        ok: false,
-        error: "Munim answered in a shape the book cannot file. Try again, or run the breakfast script.",
-      };
-    }
-    return { ok: true, turn };
-  });
 
 function parseTurn(raw: string): AgentTurn | null {
   const trimmed = raw.trim();
