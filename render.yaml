@@ -1,0 +1,15 @@
+# Render Blueprint configuration for Munim Agentic Commerce
+services:
+  - type: web
+    name: munim-agentic-commerce
+    env: node
+    plan: free
+    region: singapore
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npx vite preview --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: NODE_VERSION
+        value: 20.18.0
