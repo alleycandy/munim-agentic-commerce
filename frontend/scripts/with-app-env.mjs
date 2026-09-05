@@ -25,6 +25,44 @@ import { constants as osConstants } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+/**
+ * Parse a .env file and return key=value pairs as an object.
+ * Handles quoted values, ignores comments and blank lines.
+ */
+function parseDotEnv(text) {
+  const env = {};
+  for (const line of text.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eqIdx = trimmed.indexOf("=");
+    if (eqIdx < 1) continue;
+    const key = trimmed.slice(0, eqIdx).trim();
+    let value = trimmed.slice(eqIdx + 1).trim();
+    // Strip surrounding quotes
+    if ((value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+    if (key) env[key] = value;
+  }
+  return env;
+}
+
+/** Load .env from root — process.env always wins over .env values. */
+function loadDotEnv(root) {
+  try {
+    const text = readFileSync(join(root, ".env"), "utf8");
+    const parsed = parseDotEnv(text);
+    for (const [key, value] of Object.entries(parsed)) {
+      if (!(key in process.env)) {
+        process.env[key] = value;
+      }
+    }
+  } catch {
+    // No .env file — that's fine
+  }
+}
+
 export const APP_ENV_REL_PATH = ".grok/app-env.json";
 
 const VITE_PREFIX = "VITE_";
@@ -110,6 +148,8 @@ function main(argv) {
     console.error("usage: node scripts/with-app-env.mjs <command> [args…]");
     process.exit(2);
   }
+  // Load .env first so server-side keys (GEMINI_API_KEY, XAI_API_KEY) are available
+  loadDotEnv(projectRoot());
   const env = mergeAppEnv(readAppEnv(projectRoot()), process.env);
   const child = spawn(command, args, { stdio: "inherit", env, shell: true });
   // The dev server is long-running and is stopped by signalling this wrapper.

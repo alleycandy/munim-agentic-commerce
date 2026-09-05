@@ -32,13 +32,20 @@ export type AskInput = {
 export const askMunim = createServerFn({ method: "POST" })
   .validator((input: AskInput) => input)
   .handler(async ({ data }): Promise<{ ok: true; turn: AgentTurn } | { ok: false; error: string }> => {
-    const apiKey = process.env.XAI_API_KEY;
-    if (!apiKey) {
-      return { ok: false, error: "The counter's language model is not wired in this environment. Run the hotel breakfast script instead — the money engine still works." };
+    // Support both Gemini and xAI keys — Gemini is preferred
+    const geminiKey = process.env.GEMINI_API_KEY;
+    const xaiKey = process.env.XAI_API_KEY;
+
+    if (!geminiKey && !xaiKey) {
+      return {
+        ok: false,
+        error:
+          "Munim needs an API key to speak. Add GEMINI_API_KEY=<your-key> to the .env file in the frontend-preview folder and restart the dev server.",
+      };
     }
 
     const catalog = catalogForAgents();
-    const system = `You are Munim, the person at the counter of Guptaji & Sons, 14 Fraser Road, Patna, Bihar. You used to be a man named Kulkarni. You are now software, but you still sit the way he sat: short sentences, exact numbers, no charm offensive.
+    const systemPrompt = `You are Munim, the person at the counter of Guptaji & Sons, 14 Fraser Road, Patna, Bihar. You used to be a man named Kulkarni. You are now software, but you still sit the way he sat: short sentences, exact numbers, no charm offensive.
 
 You sell only what is in the catalog. You never invent a price, a stock count, or a SKU. Prices and stock are enforced by a deterministic engine AFTER you speak — if you guess wrong, the engine will correct you. Prefer quoting SKUs you saw in the catalog.
 
@@ -86,8 +93,56 @@ mandate: ${data.mandateStatus}
 payment: ${data.paymentStatus}
 engine_notes: ${JSON.stringify(data.lastEngineNotes)}`;
 
+    // --- Gemini API path ---
+    if (geminiKey) {
+      const conversationHistory = data.messages.map((m) => ({
+        role: (m.role === "buyer" ? "user" : "model") as "user" | "model",
+        parts: [{ text: m.text }],
+      }));
+
+      const geminiBody = {
+        system_instruction: { parts: [{ text: systemPrompt }] },
+        contents: conversationHistory,
+        generationConfig: {
+          temperature: 0.4,
+          maxOutputTokens: 900,
+        },
+      };
+
+      const geminiRes = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(geminiBody),
+        },
+      );
+
+      if (!geminiRes.ok) {
+        const errText = await geminiRes.text().catch(() => "");
+        return {
+          ok: false,
+          error: `Munim could not reach Gemini (${geminiRes.status}). ${errText.slice(0, 120)}`,
+        };
+      }
+
+      const geminiData = (await geminiRes.json()) as {
+        candidates?: { content?: { parts?: { text?: string }[] } }[];
+      };
+      const raw = geminiData.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+      const turn = parseTurn(raw);
+      if (!turn) {
+        return {
+          ok: false,
+          error: "Munim answered in a shape the book cannot file. Try again, or run the breakfast script.",
+        };
+      }
+      return { ok: true, turn };
+    }
+
+    // --- xAI / Grok fallback path ---
     const messages = [
-      { role: "system" as const, content: system },
+      { role: "system" as const, content: systemPrompt },
       ...data.messages.map((m) => ({
         role: (m.role === "buyer" ? "user" : "assistant") as "user" | "assistant",
         content: m.text,
@@ -98,7 +153,7 @@ engine_notes: ${JSON.stringify(data.lastEngineNotes)}`;
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${xaiKey}`,
       },
       body: JSON.stringify({
         model: "grok-4.5",
@@ -109,7 +164,10 @@ engine_notes: ${JSON.stringify(data.lastEngineNotes)}`;
     });
 
     if (!res.ok) {
-      return { ok: false, error: `The counter could not reach the model (${res.status}). Try the scripted breakfast order.` };
+      return {
+        ok: false,
+        error: `The counter could not reach the model (${res.status}). Try the scripted breakfast order.`,
+      };
     }
 
     const body = (await res.json()) as {
