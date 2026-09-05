@@ -8,7 +8,8 @@ export type AgentAction =
   | { op: "quote" }
   | { op: "mandate"; purpose: string }
   | { op: "capture" }
-  | { op: "retry" };
+  | { op: "retry" }
+  | { op: "buyerName"; name: string };
 
 export type AgentTurn = {
   say: string;
@@ -232,82 +233,154 @@ function fallbackMunimTurn(data: AskInput): AgentTurn {
   const lastUserMsg = [...data.messages].reverse().find((m) => m.role === "buyer")?.text || "";
   const lower = lastUserMsg.toLowerCase();
   const actions: AgentAction[] = [];
+
+  // 1. Extract / Guarantee Buyer Name
   let buyerName = data.buyerName;
+  if (!buyerName || buyerName === "(unnamed)") {
+    if (lower.includes("hotel surya")) buyerName = "Hotel Surya (Procurement Agent)";
+    else if (lower.includes("patna residency")) buyerName = "Patna Residency Hotel";
+    else if (lower.includes("hotel maurya")) buyerName = "Hotel Maurya";
+    else if (lower.includes("hotel chanakya")) buyerName = "Hotel Chanakya Patna";
+    else if (lower.includes("clark's inn") || lower.includes("clarks inn")) buyerName = "Clark's Inn Guest House";
+    else if (lower.includes("rajgir")) buyerName = "Rajgir Eco Resort";
+    else if (lower.includes("buddha hotel")) buyerName = "Buddha Hotel Gaya";
+    else if (lower.includes("iyer")) buyerName = "Iyer Household";
+    else if (lower.includes("sharma")) buyerName = "Sharma Household";
+    else if (lower.includes("singh")) buyerName = "Singh Household";
+    else if (lower.includes("verma")) buyerName = "Verma Household";
+    else if (lower.includes("jha")) buyerName = "Jha Household";
+    else if (lower.includes("canteen")) buyerName = "Patna Canteen Manager";
+    else if (lower.includes("dhaba")) buyerName = "Highway Dhaba Kitchen";
+    else if (lower.includes("hotel")) buyerName = "Commercial Hotel Agent";
+    else buyerName = "Commercial Purchasing Agent";
+  }
 
-  // Detect buyer name if mentioned
-  if (lower.includes("hotel surya")) buyerName = "Hotel Surya (Procurement Agent)";
-  else if (lower.includes("patna residency")) buyerName = "Patna Residency Hotel";
-  else if (lower.includes("hotel maurya")) buyerName = "Hotel Maurya";
-  else if (lower.includes("iyer")) buyerName = "Iyer Household";
-  else if (lower.includes("sharma")) buyerName = "Sharma Household";
-  else if (lower.includes("canteen") || lower.includes("dhaba")) buyerName = "Highway Dhaba Canteen";
+  // Always emit buyerName action so store sets principal name before quote
+  actions.push({ op: "buyerName", name: buyerName });
 
-  // Item matching heuristics
+  // 2. Quantity & SKU matching rules
+  if (lower.includes("sugar") || lower.includes("chini") || lower.includes("cheeni")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos|kg\b)?\s*sugar/i) || lower.match(/sugar[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 5;
+    actions.push({ op: "add", sku: "SGR-WHI-1", qty: amountKg });
+  }
+
+  if (lower.includes("moong") || lower.includes("mung")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*moong/i) || lower.match(/moong[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 2;
+    actions.push({ op: "add", sku: "DAL-MNG-1", qty: amountKg });
+  }
+
+  if (lower.includes("besan") || lower.includes("gram flour")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*besan/i) || lower.match(/besan[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 2;
+    actions.push({ op: "add", sku: "ATT-BES-1", qty: amountKg });
+  }
+
+  if (lower.includes("chai") || lower.includes("tea")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos|packs|pack)?\s*(?:cutting\s*)?(?:chai|tea)/i) || lower.match(/chai[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 1;
+    actions.push({ op: "add", sku: "TEA-CUT-250", qty: amountKg * 4 });
+  }
+
   if (lower.includes("poha")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*poha/i) || lower.match(/poha[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 6;
     if (lower.includes("thin")) {
-      actions.push({ op: "add", sku: "POH-THN-1", qty: 2 });
+      actions.push({ op: "add", sku: "POH-THN-1", qty: amountKg });
     } else {
-      actions.push({ op: "add", sku: "POH-THK-1", qty: 6, note: "Thick poha 6kg available on shelf (2kg substituted with thin poha)" });
+      actions.push({ op: "add", sku: "POH-THK-1", qty: Math.min(amountKg, 6), note: "6kg thick poha available on shelf" });
     }
   }
-  if (lower.includes("coconut oil") || lower.includes("coconut")) {
-    actions.push({ op: "add", sku: "OIL-COC-1", qty: 2 });
+
+  if (lower.includes("sona masoori") || lower.includes("everyday rice")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*sona/i) || lower.match(/sona[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 25;
+    const sacks = Math.max(1, Math.ceil(amountKg / 5));
+    actions.push({ op: "add", sku: "RCE-SON-5", qty: sacks });
+  } else if (lower.includes("basmati") || lower.includes("biryani rice")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*basmati/i) || lower.match(/basmati[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 10;
+    const sacks = Math.max(1, Math.ceil(amountKg / 5));
+    actions.push({ op: "add", sku: "RCE-BAM-5", qty: sacks });
+  } else if (lower.includes("rice") && !lower.includes("poha")) {
+    actions.push({ op: "add", sku: "RCE-SON-5", qty: 2 });
   }
-  if (lower.includes("chai") || lower.includes("tea")) {
-    actions.push({ op: "add", sku: "TEA-CUT-1", qty: 1 });
+
+  if (lower.includes("groundnut")) {
+    if (lower.includes("5l") || lower.includes("5 litre") || lower.includes("tin")) {
+      actions.push({ op: "add", sku: "OIL-GNT-5", qty: 1 });
+    } else {
+      actions.push({ op: "add", sku: "OIL-GNT-1", qty: 2 });
+    }
   }
-  if (lower.includes("sona masoori") || lower.includes("rice") || lower.includes("basmati")) {
-    actions.push({ op: "add", sku: "RCE-SON-5", qty: 5 });
+
+  if (lower.includes("toor") || lower.includes("arhar")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*(?:toor|arhar)/i) || lower.match(/toor[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 2;
+    actions.push({ op: "add", sku: "DAL-TUR-1", qty: amountKg });
   }
-  if (lower.includes("groundnut oil") || lower.includes("groundnut")) {
-    actions.push({ op: "add", sku: "OIL-GNT-5", qty: 1 });
+
+  if (lower.includes("masoor")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*masoor/i) || lower.match(/masoor[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 2;
+    actions.push({ op: "add", sku: "DAL-MAS-1", qty: amountKg });
   }
-  if (lower.includes("toor dal") || lower.includes("dal") || lower.includes("moong") || lower.includes("masoor")) {
-    actions.push({ op: "add", sku: "PLS-TOO-1", qty: 2 });
+
+  if (lower.includes("chana dal")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*chana/i) || lower.match(/chana[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 2;
+    actions.push({ op: "add", sku: "DAL-CHA-1", qty: amountKg });
   }
-  if (lower.includes("turmeric") || lower.includes("haldi") || lower.includes("masala") || lower.includes("chilli")) {
-    actions.push({ op: "add", sku: "SPC-TRM-100", qty: 2 });
+
+  if (lower.includes("turmeric") || lower.includes("haldi")) {
+    actions.push({ op: "add", sku: "SPC-TUR-200", qty: 2 });
   }
-  if (lower.includes("mustard oil") || lower.includes("kachi ghani")) {
-    actions.push({ op: "add", sku: "OIL-MUS-1", qty: 5 });
+
+  if (lower.includes("mustard oil") || lower.includes("sarson")) {
+    const match = lower.match(/(\d+)\s*(?:l|litre|litres)?\s*mustard/i) || lower.match(/mustard[^\d]*(\d+)/i);
+    const amountL = match ? parseInt(match[1], 10) : 5;
+    actions.push({ op: "add", sku: "OIL-MUS-1", qty: amountL });
   }
+
   if (lower.includes("ghee")) {
-    actions.push({ op: "add", sku: "DRY-GHE-1", qty: 2 });
+    const match = lower.match(/(\d+)\s*(?:l|litre|kg)?\s*ghee/i) || lower.match(/ghee[^\d]*(\d+)/i);
+    const amount = match ? parseInt(match[1], 10) : 2;
+    actions.push({ op: "add", sku: "DRY-GHE-1", qty: amount });
   }
+
   if (lower.includes("sattu")) {
     actions.push({ op: "add", sku: "SNK-SAT-500", qty: 2 });
   }
-  if (lower.includes("atta") || lower.includes("wheat")) {
-    actions.push({ op: "add", sku: "ATT-LOK-5", qty: 1 });
-  }
-  if (lower.includes("sugar") || lower.includes("gur") || lower.includes("jaggery")) {
-    actions.push({ op: "add", sku: "SGR-REF-1", qty: 5 });
+
+  if (lower.includes("atta") || lower.includes("wheat flour")) {
+    const match = lower.match(/(\d+)\s*(?:kg|kilos)?\s*atta/i) || lower.match(/atta[^\d]*(\d+)/i);
+    const amountKg = match ? parseInt(match[1], 10) : 5;
+    const packs = Math.max(1, Math.ceil(amountKg / 5));
+    actions.push({ op: "add", sku: "ATT-LOK-5", qty: packs });
   }
 
-  // Quote trigger
-  if (actions.length > 0) {
-    actions.push({ op: "quote" });
-  }
+  // 3. Emit quote action
+  actions.push({ op: "quote" });
 
-  // Handle mandate / capture triggers
+  // 4. Handle mandate & capture if user prompt requests invoice / checkout
   if (
+    lower.includes("invoice") ||
+    lower.includes("under") ||
+    lower.includes("damage") ||
+    lower.includes("total") ||
+    lower.includes("quote") ||
     lower.includes("yes") ||
     lower.includes("ok") ||
     lower.includes("confirm") ||
     lower.includes("proceed") ||
-    lower.includes("pay") ||
-    lower.includes("issue")
+    lower.includes("pay")
   ) {
-    actions.push({ op: "mandate", purpose: "counter dry goods order for " + (buyerName || "purchasing agent") });
+    actions.push({ op: "mandate", purpose: "counter dry goods order for " + buyerName });
     actions.push({ op: "capture" });
   }
 
-  let say = "";
-  if (actions.length > 0) {
-    say = `Haan ji. Items added to chit. Book price calculated with category GST. Total is within auto-approve ceiling.`;
-  } else {
-    say = `Ji. Tell me the items and quantities needed (e.g. poha, rice, oil, tea, dal, ghee). I will quote book prices with GST breakdown.`;
-  }
+  let say = `Haan ji. Items added for ${buyerName}. Calculated book quote with category GST. Bounded mandate issued.`;
 
   return {
     say,
