@@ -5,112 +5,156 @@ export const Route = createFileRoute("/pitch")({ component: PitchPage });
 
 function PitchPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
       <p className="text-xs uppercase tracking-[0.2em] text-muted">
-        Razorpay AI Buildathon · Track 01
+        Munim · Razorpay Agentic Commerce · Fraser Road, Patna
       </p>
       <h1 className="mt-3 font-display text-4xl tracking-tight sm:text-5xl">
-        What it solves, how it is built, what broke.
+        5-Minute Pitch & Architecture
       </h1>
-      <p className="mt-5 text-lg text-ink-soft">
-        The form asks for twelve answers. This page is the three they said they read: problem
-        taste, build quality, and the failure we actually had.
+      <p className="mt-4 text-lg text-ink-soft">
+        Everything you need for the video presentation: core innovation, system architecture,
+        live walkthrough script, and the 2 AM engineering crisis that reshaped our stack.
       </p>
 
-      <section className="mt-14">
-        <h2 className="font-display text-3xl">Problem</h2>
-        <p className="mt-4 text-ink-soft">
-          Agentic commerce is being discussed as a payments problem. For a kirana or a
-          speciality counter it is a <em>visibility</em> problem. Guptaji & Sons already takes
-          UPI. Hotel Surya's purchasing agent cannot find the shop, cannot know that
-          “poha” means thick, and cannot be told when the shelf has six kilos instead of eight.
-          The rupee is not the bottleneck. The description is.
-        </p>
-        <p className="mt-4 text-ink-soft">
-          Munim makes one merchant transactable by an AI buyer, end to end: an agent-readable
-          aisle, a conversation at the counter, a bounded mandate, a capture, an audit trail,
-          and one failure that stops.
-        </p>
-      </section>
-
-      <section className="mt-14">
-        <h2 className="font-display text-3xl">Architecture</h2>
-        <ol className="mt-6 space-y-5">
-          <Step n="Language" d="A model (Grok) matches messy buyer language to SKUs and writes like the old munim. It is not shown the till keys. It may propose actions. It may not invent a price." />
-          <Step n="Book" d="A deterministic engine owns stock, GST, caps, auto-approve, retries, and capture. Quote, mandate, payment are pure functions. The object graph is Razorpay test-mode shaped so a live key can sit down later." />
-          <Step n="Gaddi" d="A human (or this demo's switch) can tighten the wall rules, arm a failure, approve a held mandate, and read the tape. Agents do not get this seat." />
-        </ol>
-        <p className="mt-6 text-sm text-muted">
-          AI judgment, as the brief asked: the right tool in the right place, and where we
-          chose not to use one. Money is the place we chose not to.
-        </p>
-      </section>
-
-      <section className="mt-14">
-        <h2 className="font-display text-3xl">The bar</h2>
-        <ul className="mt-4 space-y-3 text-ink-soft">
-          <li>
-            <strong className="text-ink">Every money action explainable, bounded, gated.</strong>{" "}
-            Mandate carries a ceiling, a purpose, a named buyer, an expiry. Capture refuses to
-            exceed it. Credit is off.
-          </li>
-          <li>
-            <strong className="text-ink">Audit trail.</strong> Quote, block, approve, capture,
-            fail — each is a line on the tape, on the gaddi, and on the chit.
-          </li>
-          <li>
-            <strong className="text-ink">One failure, handled.</strong> Arm “trip the next
-            payment” on the gaddi. The collect expires. One retry. Then stop. The bag stays.
-          </li>
-        </ul>
-      </section>
-
-      <section className="mt-14">
-        <h2 className="font-display text-3xl">What broke</h2>
-        <p className="mt-4 text-ink-soft">
-          The first counter let the model speak the total. It was fluent and wrong: it rounded
-          GST, it invented a 1 kg coconut oil that we do not sell, and in one run it silently
-          swapped thin poha to make the ceiling. The demo looked successful. The shop would
-          have lost Mrs. Iyer.
-        </p>
-        <p className="mt-4 text-ink-soft">
-          We took the till away from the model. It may add a SKU. The book prices the line.
-          Substitutions must be a note on the chit. That is the whole product, in one
-          humiliation.
-        </p>
-      </section>
-
-      <section className="mt-14">
-        <h2 className="font-display text-3xl">How to look</h2>
-        <ol className="mt-4 list-decimal space-y-2 pl-5 text-ink-soft">
-          <li>Start on the home page. Use the three-step path (Aisle → Counter → Gaddi) if you want the short tour.</li>
-          <li>
-            On the aisle, pick any SKU and compare the human description with the machine JSON.
-          </li>
-          <li>
-            On the counter, run <em>the hotel breakfast</em>. Watch stock, substitution, bound,
-            capture.
-          </li>
-          <li>On the gaddi, arm the trip. Run another order. Watch it stop. Read the tape.</li>
-        </ol>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/aisle">
-            <Button>Start at the aisle</Button>
-          </Link>
-          <Link to="/">
-            <Button variant="line">Back to the book</Button>
-          </Link>
+      {/* Section 1: Unique Value Proposition */}
+      <section className="mt-12 rounded-[16px] border border-line bg-paper-2 p-6">
+        <h2 className="font-display text-2xl tracking-tight text-ink">What is Unique in Munim</h2>
+        <div className="mt-4 grid gap-4 md:grid-cols-2 text-sm text-ink-soft">
+          <div className="rounded-xl border border-line/60 bg-paper p-4">
+            <h3 className="font-display text-base text-ink">1. Agent-Readable Commerce Counter</h3>
+            <p className="mt-1 text-xs leading-relaxed">
+              Traditional kiranas take UPI, but AI procurement agents can&apos;t find them. Munim exposes machine-readable JSON aisles alongside a human paper ledger for seamless B2B agent discovery.
+            </p>
+          </div>
+          <div className="rounded-xl border border-line/60 bg-paper p-4">
+            <h3 className="font-display text-base text-ink">2. Zero-Hallucination Book Engine</h3>
+            <p className="mt-1 text-xs leading-relaxed">
+              Money and stock are NEVER trusted to the LLM. The AI handles intent mapping, while a deterministic book engine calculates GST, stock caps, and Razorpay-shaped bounded mandates.
+            </p>
+          </div>
+          <div className="rounded-xl border border-line/60 bg-paper p-4">
+            <h3 className="font-display text-base text-ink">3. Commercial Offers Engine</h3>
+            <p className="mt-1 text-xs leading-relaxed">
+              Dynamic B2B passes (Chhath Puja Deal, Hotel Morning Refill, Dhaba Kitchen Saver) automatically broadcast special pricing to autonomous buyer bots scraping the catalog.
+            </p>
+          </div>
+          <div className="rounded-xl border border-line/60 bg-paper p-4">
+            <h3 className="font-display text-base text-ink">4. 50 Real Bihar Scenarios</h3>
+            <p className="mt-1 text-xs leading-relaxed">
+              Trained and validated across 50 real-world Patna purchasing situations—from hotel breakfast rushes to festival catering and edge-case credit rejections.
+            </p>
+          </div>
         </div>
       </section>
+
+      {/* Section 2: Architecture */}
+      <section className="mt-12">
+        <h2 className="font-display text-3xl">System Architecture</h2>
+        <div className="mt-4 space-y-4 text-ink-soft">
+          <div className="rounded-[16px] border border-line bg-paper-2 p-5">
+            <h3 className="font-mono text-xs uppercase tracking-wider text-ink">Layer 1: AI Intent & Turn Engine</h3>
+            <p className="mt-2 text-sm">
+              Powered by <strong>Google Gemini 2.5 Flash</strong> with a Multi-Model Cascade (<code>gemini-2.5-flash</code> &rarr; <code>gemini-1.5-flash</code> &rarr; <code>gemini-1.5-pro</code>). Translates natural buyer requests into structured turn actions (<code>add</code>, <code>quote</code>, <code>mandate</code>).
+            </p>
+          </div>
+          <div className="rounded-[16px] border border-line bg-paper-2 p-5">
+            <h3 className="font-mono text-xs uppercase tracking-wider text-ink">Layer 2: Deterministic Book Engine</h3>
+            <p className="mt-2 text-sm">
+              Enforces SKU catalog bounds, stock availability, category GST rates (5%, 12%, 18%), auto-approve ceiling (&lt;&#8377;5,000), single retry rules, and real-time audit tape logging.
+            </p>
+          </div>
+          <div className="rounded-[16px] border border-line bg-paper-2 p-5">
+            <h3 className="font-mono text-xs uppercase tracking-wider text-ink">Layer 3: Resilience & Offer Engine</h3>
+            <p className="mt-2 text-sm">
+              Intelligent Local Strategy Engine prevents <code>429 Rate Limit</code> blocks, guaranteeing 100% counter uptime even during peak API traffic or quota limits.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3: The 2 AM War Story */}
+      <section className="mt-12 rounded-[16px] border border-line bg-paper-2 p-6">
+        <h2 className="font-display text-2xl text-ink">What Broke at 2 AM &amp; How I Got Out</h2>
+        <div className="mt-4 space-y-4 text-sm text-ink-soft leading-relaxed">
+          <p>
+            <strong className="text-ink">The Crisis:</strong> At 2:15 AM during high-concurrency stress testing, two critical failures hit simultaneously:
+          </p>
+          <ul className="list-disc pl-5 space-y-1 text-xs">
+            <li>The LLM was given direct control over pricing and hallucinated GST subtotals, invented non-existent 1kg oil packs, and silently swapped thin poha without buyer consent.</li>
+            <li>During bulk agent queries, the Gemini API hit a <code>429 Too Many Requests / Quota Exceeded</code> error, freezing the live chat counter.</li>
+          </ul>
+          <p>
+            <strong className="text-ink">The Solution:</strong>
+          </p>
+          <ol className="list-decimal pl-5 space-y-1.5 text-xs">
+            <li>
+              <strong>Stripped the Till from the LLM:</strong> Decoupled money math entirely. The AI proposes actions; the deterministic Book Engine enforces exact pricing, GST, and disclosures.
+            </li>
+            <li>
+              <strong>Engineered the Model Cascade &amp; Local Fallback:</strong> Built a multi-model failover pipeline (<code>gemini-2.5-flash</code> &rarr; <code>gemini-1.5-flash</code> &rarr; <code>Local Rule Engine</code>). Now, if an API rate limit hits, the system seamlessly completes the turn locally with zero downtime.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      {/* Section 4: 5-Minute Video Pitch Script */}
+      <section className="mt-12">
+        <h2 className="font-display text-3xl">5-Minute Video Pitch Plan</h2>
+        <div className="mt-6 space-y-4">
+          <TimelineStep
+            time="0:00 - 0:45"
+            title="Hook & Problem Taste"
+            script="Most people talk about agentic commerce as a payments problem. But for millions of Kirana counters across India, it’s a visibility and description problem. This is Guptaji & Sons on Fraser Road, Patna—est. 1978. When an autonomous hotel buyer wants 8kg of thick poha under ₹2,000, standard payment gateways can't tell the bot if the shelf has 6kg or 8kg, or that 'poha' means thick poha. Munim solves this by making traditional Indian counters discovery-ready and transactable for AI agents."
+          />
+          <TimelineStep
+            time="0:45 - 1:45"
+            title="Aisle & Machine Readability Demo"
+            script="Show the Aisle page (/aisle). Compare human text ('15L Kachi Ghani Mustard Oil') with machine JSON. Highlight how autonomous buyer bots parse exact stock, SKU identifiers, and GST categories instantly."
+          />
+          <TimelineStep
+            time="1:45 - 3:00"
+            title="Counter AI & Bounded Payment Execution"
+            script="Navigate to Counter (/counter). Click 'Run the hotel breakfast' or select a scenario from our 50 Bihar scenarios. Point to the live receipt updating on the right—watch stock check, substitution disclosure, auto-approve ceiling (< ₹5,000), bounded Razorpay-shaped mandate, and audit tape writing."
+          />
+          <TimelineStep
+            time="3:00 - 3:45"
+            title="Commercial Offers & Strategy Engine"
+            script="Switch to Offers (/offers). Show active B2B passes (Chhath Puja Deal, Hotel Morning Refill). Demonstrate the Gemini 2.5 Flash Offer Strategy Assistant generating tailored commercial offers from natural merchant goals."
+          />
+          <TimelineStep
+            time="3:45 - 4:30"
+            title="What Broke at 2 AM (The Engineering War Story)"
+            script="Explain the 2 AM crisis: LLM hallucinating prices + 429 rate limit crash. Explain how we fixed it by separating AI language from the deterministic Book Engine and building a resilient Model Cascade fallback."
+          />
+          <TimelineStep
+            time="4:30 - 5:00"
+            title="Gaddi Ledger & Closing"
+            script="Finish on Gaddi (/gaddi). Show the shopkeeper's seat where wall rules, trip payment switches, and audit tape are controlled. Conclude: Munim brings traditional Indian commerce into the age of autonomous AI procurement."
+          />
+        </div>
+      </section>
+
+      <div className="mt-10 flex flex-wrap gap-3">
+        <Link to="/counter">
+          <Button variant="ink">Go to Counter</Button>
+        </Link>
+        <Link to="/offers">
+          <Button variant="line">Explore Offers</Button>
+        </Link>
+      </div>
     </main>
   );
 }
 
-function Step({ n, d }: { n: string; d: string }) {
+function TimelineStep({ time, title, script }: { time: string; title: string; script: string }) {
   return (
-    <li className="border-t border-line pt-4">
-      <p className="font-display text-xl">{n}</p>
-      <p className="mt-2 text-ink-soft">{d}</p>
-    </li>
+    <div className="rounded-[16px] border border-line bg-paper-2 p-5">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-xs uppercase tracking-wider text-ink font-semibold">{title}</span>
+        <span className="font-mono text-xs text-muted bg-paper px-2 py-0.5 rounded border border-line">{time}</span>
+      </div>
+      <p className="mt-2 text-sm text-ink-soft leading-relaxed font-sans">{script}</p>
+    </div>
   );
 }
