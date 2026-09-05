@@ -301,36 +301,36 @@ function isAction(value: unknown): value is AgentAction {
   return false;
 }
 
-export type GenerateCampaignInput = {
+export type GenerateOfferInput = {
   goal: string;
 };
 
-export const generateCampaignStrategyFn = createServerFn({ method: "POST" })
-  .validator((input: GenerateCampaignInput) => input)
+export const generateOfferStrategyFn = createServerFn({ method: "POST" })
+  .validator((input: GenerateOfferInput) => input)
   .handler(async ({ data }): Promise<{ ok: true; strategy: any } | { ok: false; error: string }> => {
     const geminiKey = process.env.GEMINI_API_KEY;
     if (!geminiKey) {
       return { ok: false, error: "GEMINI_API_KEY is missing in .env" };
     }
 
-    const prompt = `You are the Growth & Marketing Campaign Orchestrator for Guptaji & Sons, Fraser Road, Patna, Bihar.
-The merchant wants to create a new campaign to attract more customers.
+    const prompt = `You are the Commercial Offer Strategy Assistant for Guptaji & Sons, Fraser Road, Patna, Bihar.
+The merchant wants to create a new promotional offer to attract buyers.
 
 MERCHANT GOAL: "${data.goal}"
 
-Generate a highly strategic, high-converting campaign in valid JSON format only (no markdown, no triple backticks).
+Generate a strategic offer in valid JSON format only (no emojis, no markdown, no triple backticks).
 Include the following exact keys:
 {
-  "title": "Short catchy campaign title",
-  "description": "2-sentence promotional description tailored for Patna/Bihar market or AI buyer agents",
+  "title": "Short catchy offer title without emojis",
+  "description": "2-sentence promotional description tailored for Patna/Bihar market or AI buyer agents without emojis",
   "targetAudience": "hotels_dhabas" OR "ai_agents" OR "halwais_caterers" OR "retail_households" OR "all_buyers",
   "targetLabel": "Readable target description (e.g. Fraser Rd Hotel Managers, Autonomous AI Procurement Agents)",
   "channels": ["agent_protocol", "whatsapp_b2b", "sms_broadcast"],
   "discountType": "percentage" OR "fixed_amount",
   "discountValue": 10 (percentage like 10 or 15) OR 25000 (fixed amount in paise, e.g. 25000 = ₹250),
   "minOrderValuePaise": 200000 (min order value in paise, e.g. 200000 = ₹2000),
-  "badge": "Short badge with emoji (e.g. 🏨 Hotel Saver, 🪔 Mahaparv Deal, 🤖 AI Protocol)",
-  "aiGeneratedReasoning": "1 sentence strategic rationale explaining why this campaign will attract customers & boost ROAS.",
+  "badge": "Clean text badge without emojis (e.g. Hotel Saver, Mahaparv Deal, AI Protocol)",
+  "aiGeneratedReasoning": "1 sentence strategic rationale explaining why this offer will attract customers without emojis.",
   "appliedCategories": ["rice", "oil", "spice"]
 }`;
 
@@ -360,7 +360,7 @@ Include the following exact keys:
       const strategy = JSON.parse(text);
       return { ok: true, strategy };
     } catch (e: any) {
-      return { ok: false, error: e?.message || "Failed to generate campaign strategy" };
+      return { ok: false, error: e?.message || "Failed to generate offer strategy" };
     }
   });
 

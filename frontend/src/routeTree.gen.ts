@@ -11,9 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AisleRouteImport } from './routes/aisle'
-import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as CounterRouteImport } from './routes/counter'
 import { Route as GaddiRouteImport } from './routes/gaddi'
+import { Route as OffersRouteImport } from './routes/offers'
 import { Route as PitchRouteImport } from './routes/pitch'
 
 const IndexRoute = IndexRouteImport.update({
@@ -26,11 +26,6 @@ const AisleRoute = AisleRouteImport.update({
   path: '/aisle',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampaignsRoute = CampaignsRouteImport.update({
-  id: '/campaigns',
-  path: '/campaigns',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CounterRoute = CounterRouteImport.update({
   id: '/counter',
   path: '/counter',
@@ -39,6 +34,11 @@ const CounterRoute = CounterRouteImport.update({
 const GaddiRoute = GaddiRouteImport.update({
   id: '/gaddi',
   path: '/gaddi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OffersRoute = OffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PitchRoute = PitchRouteImport.update({
@@ -50,49 +50,42 @@ const PitchRoute = PitchRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aisle': typeof AisleRoute
-  '/campaigns': typeof CampaignsRoute
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
+  '/offers': typeof OffersRoute
   '/pitch': typeof PitchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aisle': typeof AisleRoute
-  '/campaigns': typeof CampaignsRoute
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
+  '/offers': typeof OffersRoute
   '/pitch': typeof PitchRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/aisle': typeof AisleRoute
-  '/campaigns': typeof CampaignsRoute
   '/counter': typeof CounterRoute
   '/gaddi': typeof GaddiRoute
+  '/offers': typeof OffersRoute
   '/pitch': typeof PitchRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aisle' | '/campaigns' | '/counter' | '/gaddi' | '/pitch'
+  fullPaths: '/' | '/aisle' | '/counter' | '/gaddi' | '/offers' | '/pitch'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aisle' | '/campaigns' | '/counter' | '/gaddi' | '/pitch'
-  id:
-    | '__root__'
-    | '/'
-    | '/aisle'
-    | '/campaigns'
-    | '/counter'
-    | '/gaddi'
-    | '/pitch'
+  to: '/' | '/aisle' | '/counter' | '/gaddi' | '/offers' | '/pitch'
+  id: '__root__' | '/' | '/aisle' | '/counter' | '/gaddi' | '/offers' | '/pitch'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AisleRoute: typeof AisleRoute
-  CampaignsRoute: typeof CampaignsRoute
   CounterRoute: typeof CounterRoute
   GaddiRoute: typeof GaddiRoute
+  OffersRoute: typeof OffersRoute
   PitchRoute: typeof PitchRoute
 }
 
@@ -112,13 +105,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AisleRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/campaigns': {
-      id: '/campaigns'
-      path: '/campaigns'
-      fullPath: '/campaigns'
-      preLoaderRoute: typeof CampaignsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/counter': {
       id: '/counter'
       path: '/counter'
@@ -131,6 +117,13 @@ declare module '@tanstack/react-router' {
       path: '/gaddi'
       fullPath: '/gaddi'
       preLoaderRoute: typeof GaddiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offers': {
+      id: '/offers'
+      path: '/offers'
+      fullPath: '/offers'
+      preLoaderRoute: typeof OffersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pitch': {
@@ -146,9 +139,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AisleRoute: AisleRoute,
-  CampaignsRoute: CampaignsRoute,
   CounterRoute: CounterRoute,
   GaddiRoute: GaddiRoute,
+  OffersRoute: OffersRoute,
   PitchRoute: PitchRoute,
 }
 export const routeTree = rootRouteImport
