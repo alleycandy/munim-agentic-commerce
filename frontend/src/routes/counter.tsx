@@ -229,19 +229,132 @@ function CounterPage() {
 }
 
 function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
-  const prompts = [
-    "Hotel Surya. 8kg thick poha, 2L coconut oil, 1kg cutting chai. Under ₹2000.",
-    "Iyer household. The usual 5kg Lokwan atta, and a jar of the May mango pickle.",
-    "Canteen order: 20kg sona masoori, 10L groundnut oil. We can go to ₹8,000.",
+  const categories = [
+    {
+      label: "🏨 Hotels & Guest Houses",
+      prompts: [
+        "Hotel Surya. Breakfast for forty rooms. 8 kg thick poha, 2 litres coconut oil, 1 kg cutting chai. Under ₹2000.",
+        "Patna Residency Hotel. Daily kitchen restock: 25 kg sona masoori, 5L groundnut oil, 2 kg toor dal, 1 kg turmeric. Give me the total.",
+        "Hotel Maurya. Need 10 kg basmati for biryani night, 500g garam masala, 2 kg cashews for halwa. What's the damage?",
+        "Clark's Inn guest house. 15 kg atta, 5L mustard oil, 3 kg chana dal, 2 packs papad. Budget ₹3000.",
+        "Hotel Chanakya Patna. Monthly stock: 50 kg sugar, 10 kg moong dal, 5 kg besan, 3 kg cutting chai. Invoice it.",
+        "Rajgir Eco Resort. Organic buyer — do you have cow ghee? Need 2L. Also 2 kg Assam leaf tea and 1 kg almonds.",
+        "Buddha Hotel, Gaya. Pilgrimage season — need 20 kg rice, 5 kg masoor dal, 2 kg ghee, 5 kg jaggery. Festival pricing?",
+      ],
+    },
+    {
+      label: "🍽️ Dhabas & Canteens",
+      prompts: [
+        "Canteen order: 20 kg sona masoori, 10L groundnut oil. We can go to ₹8,000.",
+        "Highway dhaba, NH31. Weekly: 10L mustard oil, 5 kg toor dal, 2 kg chilli powder, 1 kg jeera, 1 kg turmeric.",
+        "Railway canteen, Patna Junction. Need 30 kg atta, 10L oil, 5 kg besan, 3 kg tea. Monthly supply.",
+        "SAIL canteen, Bokaro. Bulk: 100 kg sugar, 20 kg rice, 10 kg dal. Can you deliver Tuesday?",
+        "Medical college canteen. 40 kg atta, 20 kg rice, 10 kg toor dal, 5L oil. Quote with GST breakdown.",
+        "Truck drivers dhaba, Hajipur. Oil, dal, atta. 10 each. Mustard oil only — coconut not for us.",
+      ],
+    },
+    {
+      label: "🏠 Households & Regulars",
+      prompts: [
+        "Iyer household. The usual 5 kg Lokwan atta and a jar of the May mango pickle.",
+        "Sharma ji here. 2 kg sattu, 1 kg masoor dal, 500g hing — wait, do you even stock hing?",
+        "Monthly kirana for a family of six. 10 kg atta, 5 kg rice, 2 kg sugar, 1L oil, 500g tea, assorted dal.",
+        "Singh household. 2 packs tilkut as Sankranti gift, plus the regular — 5 kg atta and mustard oil.",
+        "Verma madam's list: 1 kg moong, 1 kg chana dal, 200g chutney powder, 100g jeera, 100g dhania. Total?",
+        "Jha sahib. Just sattu and gur. 2 kg sattu, 1 kg Bihar jaggery. That's it.",
+      ],
+    },
+    {
+      label: "🎉 Events & Festivals",
+      prompts: [
+        "Wedding catering, 500 guests. Need 50 kg basmati, 20 kg ghee, 10 kg cashews, 5 kg almonds, 5 kg raisins. Quote.",
+        "Chhat Puja prasad: 5 kg til, 10 kg gur, 2 kg rice, 1 kg coconut oil. Festival special rate?",
+        "Office Diwali hampers for 30 employees. Each box: tilkut, chivda, almonds, raisins. Give me cost per box.",
+        "School annual function lunch — 200 kids. 20 kg rice, 10 kg dal, 5 kg atta, 3L oil. Cheap and fast.",
+        "Makar Sankranti order. 5 kg tilkut, 3 kg til laddoo — wait, what do you have for Sankranti exactly?",
+      ],
+    },
+    {
+      label: "🔄 Substitution & Stock Tests",
+      prompts: [
+        "I need 10 kg thick poha. Any issues with stock?",
+        "Coconut oil, 5 litres. If you're out, what's the alternative at similar quality?",
+        "Cow ghee, 3 kg. If unavailable, do you have buffalo ghee? What's the price difference?",
+        "Kashmiri chilli powder, 500g. You have it? Otherwise Guntur will do but I need to know what I'm getting.",
+        "Green tea, 1 kg. Is that in stock? If not, Assam leaf tea.",
+        "Tilkut, 2 kg. Is this season's batch or last year? How much stock left?",
+        "Garlic pickle, 5 jars. That's your lowest stock item I think — confirm availability before I commit.",
+      ],
+    },
+    {
+      label: "💰 Budget & Negotiation",
+      prompts: [
+        "Total budget ₹1500. What can I get for breakfast supplies for 20 people?",
+        "₹5000 budget for a week's household groceries. Suggest what to pick from your catalog.",
+        "Best value oil for cooking — what gives me the most litres under ₹1000?",
+        "I need dal for 100 portions. Which dal is cheapest and most filling? Budget ₹800.",
+        "Compare price of 5 kg sona masoori vs 5 packs of kolam rice. Which is better deal?",
+      ],
+    },
+    {
+      label: "📋 Bulk & Commercial",
+      prompts: [
+        "School hostel, 80 students. Monthly supply of atta, rice, dal, oil, sugar. Give me a full quote.",
+        "Nursing home kitchen. Weekly: 10 kg masoor dal, 10L mustard oil, 5 kg rava, 3 kg tea, 2 kg turmeric.",
+        "Construction site canteen, 120 workers. Need cheapest calories — rice, dal, oil. 50 kg each. Total?",
+        "Printing press monthly snack budget: 20 packs banana chips, 10 packs chivda, 5 packs papad. Invoice.",
+        "Petrol pump dhaba. Every Monday: 5L mustard oil, 2 kg chilli powder, 1 kg jeera, 500g hing.",
+      ],
+    },
+    {
+      label: "🧪 Edge Cases",
+      prompts: [
+        "Do you sell items not in your catalog? I'm looking for bread.",
+        "I want to return last week's lime pickle — jar was leaking. How do you handle that?",
+        "Can I get credit? I'll pay next week. We're a regular buyer.",
+        "Same order as last Thursday — 8 kg poha, 2L oil, 1 kg chai. Pull it from history.",
+        "I need maida AND atta. What's the difference in your catalog? Which for roti, which for paratha?",
+        "Is your mustard oil kachchi ghani or refined? Important for our pickle recipe.",
+        "What's your GSTIN? I need the invoice for company records with full breakup.",
+        "Can you split the order — 50% now, 50% next week same price?",
+        "Order for Bihar Sharif food bank. 100 kg rice, 50 kg dal — do you give NGO rate?",
+        "I need everything for a chhole bhature stall startup — besan, chana dal, oil, spices. What's the kit?",
+      ],
+    },
   ];
+
+  const [activeCategory, setActiveCategory] = useState(0);
+
   return (
     <div>
       <p className="font-display text-xl">The stool is empty.</p>
       <p className="mt-2 max-w-md text-sm text-muted">
-        Try a line, or run the breakfast script — a recorded morning that uses the same till.
+        Pick a scenario below or type your own. 50 real purchasing situations — hotels, dhabas,
+        households, festivals, edge cases.
       </p>
-      <ul className="mt-5 space-y-2">
-        {prompts.map((p) => (
+
+      {/* Category tabs */}
+      <div className="mt-4 flex flex-wrap gap-1.5">
+        {categories.map((cat, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setActiveCategory(i)}
+            className={cn(
+              "rounded-full px-3 py-1 text-[11px] font-mono uppercase tracking-[0.12em] transition-colors",
+              activeCategory === i
+                ? "bg-ink text-paper"
+                : "bg-receipt text-muted shadow-[0_0_0_1px_var(--color-line)] hover:bg-paper",
+            )}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Scenario list */}
+      <ul className="mt-3 space-y-2">
+        {categories[activeCategory].prompts.map((p) => (
           <li key={p}>
             <button
               type="button"
@@ -256,6 +369,7 @@ function EmptyPrompts({ onPick }: { onPick: (t: string) => void }) {
     </div>
   );
 }
+
 
 function applyTurn(turn: AgentTurn) {
   const s = useMunim.getState();
